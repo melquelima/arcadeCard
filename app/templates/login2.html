@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename="login/bootstrap.min.css") }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename="login/style.css") }}">
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="login/css/util.css") }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="login/css/main.css") }}">
+    
+    <!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{"login/fonts/iconic/css/material-design-iconic-font.min.css" | url_to }}">
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="login/css/button.css") }}">
+
+    <title>Login</title>
+</head>
+<body>
+    <div class="limiter">
+	    <div class="container-login100" style="background-image: url('{{"login/images/bg-01.jpg" | url_to }}');">
+
+			<div class="row justify-content-md-center">
+				<div class="col-12 window">
+					<div class="text-center">
+						<span class="login100-form-title p-b-49">
+							<img src="{{ url_for('static', filename="login/logo.jpeg") }}" class="logo">
+							<h1>Login</h1>
+						</span>
+					</div>
+			
+						<div class="wrap-input100 validate-input m-b-23" data-validate = "Username is reauired">
+							<span class="label-input100">Usuário</span>
+							<input class="input100" type="text" placeholder="usuario">
+							<span class="focus-input100" data-symbol="&#xf206;"></span>
+						</div>
+
+						<div class="wrap-input100 validate-input" data-validate="Password is required">
+							<span class="label-input100">Senha</span>
+							<input class="input100" type="password" name="pass" placeholder="senha">
+							<span class="focus-input100" data-symbol="&#xf190;"></span>
+						</div>
+						
+						<div class="container-login100-form-btn">
+							<div class="wrap-login100-form-btn">
+								<div class="login100-form-bgbtn"></div>
+								<button class="login100-form-btn">
+									<a href="/">Entrar</a>
+								</button>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+    </div>
+</body>
+</html>

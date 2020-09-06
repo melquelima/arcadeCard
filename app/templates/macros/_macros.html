@@ -1,0 +1,87 @@
+
+
+{% macro textField(size,name,placeholder,ng_model,id="",disabled=False) %}
+<div class="col-sm-{{size}}">
+    <div class="form-group">
+      <label>{{name}}</label>
+      <input type="text" class="form-control" placeholder="{{placeholder}}" ng-model="{{ ng_model }}" {{ "id="+id if id != "" else "" }} {{ 'disabled' if disabled else '' }}>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro numberField(size,name,placeholder,ng_model="",style="''",label_style="", disabled=False,id="") %}
+<div class="col-sm-{{size}}">
+    <div class="form-group">
+      <label style="{{ label_style }}">{{name}}</label>
+      <input type="number" class="form-control" placeholder="{{placeholder}}" {{ "id="+id if id != "" else "" }} {{ "ng-model="+ ng_model if ng_model else "" }} style="{{ style }}" {{ 'disabled' if disabled else '' }}>
+    </div>
+</div>
+{% endmacro %}
+
+
+{% macro textAreaField(size,name,rows,placeholder,ng_model) %}
+<div class="col-sm-{{size}}">
+    <div class="form-group">
+      <label>{{name}}</label>
+      <textarea rows="{{ rows }}" class="form-control" placeholder="{{placeholder}}" ng-model="{{ ng_model }}"></textarea>
+    </div>
+</div>
+{% endmacro %}
+
+
+{% macro selectField(size,name,default,options,ng_model) %}
+<div class="col-sm-{{size}}">
+    <div class="form-group">
+      <label>{{name}}</label>
+      <select class="form-control" ng-options="{{ options }}" ng-model="{{ ng_model }}">
+        <option value="">{{ default }}</option>
+      </select>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro pwdField(size,name,placeholder,ng_model) %}
+<div class="col-sm-{{size}}">
+    <div class="form-group">
+      <label>{{name}}</label>
+      <input type="password" class="form-control" placeholder="{{placeholder}}" ng-model="{{ ng_model }}">
+    </div>
+</div>
+{% endmacro %}
+
+
+{% macro button(valor,ng_click,style) %}
+<div class="container-login100-form-btn" style="{{style}}">
+    <div class="wrap-login100-form-btn">
+      <div class="login100-form-bgbtn"></div>
+      <button class="login100-form-btn" ng-click="{{ ng_click }}">
+        {{ valor }}
+      </button>
+    </div>
+</div>
+{% endmacro %}
+
+
+{% macro buttonSquare(valor,ng_click,style) %}
+<div class="container-login100-form-btn" style="{{style}}">
+  <div class="wrap-login100-form-btn" style="border-radius: 5px;">
+    <div class="login100-form-bgbtn"></div>
+    <button class="login100-form-btn" style="height: 40px;" ng-click="{{ ng_click }}">
+      {{ valor }}
+    </button>
+  </div>
+</div>
+{% endmacro %}
+
+
+
+
+{% macro checkField(size,name,onText,offText,ng_model,id="toggle-demo") %}
+<div class="col-sm-{{size}}">
+    <div class="form-group">
+      <label>{{name}}</label>
+      <br>
+      <input id="{{ id }}" type="checkbox" data-width="100%"  checked data-toggle="toggle" data-on="{{onText}}" data-off="{{offText}}" data-onstyle="success" data-offstyle="danger" ng-model="{{ ng_model }}">
+    </div>
+</div>
+{% endmacro %}

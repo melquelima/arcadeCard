@@ -1,0 +1,119 @@
+{% from "./macros/_macros.html" import textField,selectField,button,textAreaField,pwdField,checkField,numberField,buttonSquare %}
+{% extends 'base.html'%}
+
+
+{% block css %}
+<style>
+  .ctn{
+    padding: 20px;
+    background-color: #363747;
+  }
+  div.form-group > label{
+    color:white;
+  }
+  #valor{
+    background-color: transparent;
+    height: 300px;
+    text-align: center;
+    color: #00d0ff;
+    font-size: 7vw;
+    font-weight: 1000;
+  }
+  input[id^="valor"]::placeholder {
+    color: #00d0ff !important;
+    opacity: 1; /* Firefox */
+  }
+
+  @media screen and (max-width: 768px) {
+    #valor{
+      height: 100px;
+    }
+  }
+  
+</style>
+
+{% endblock %}
+
+{% block content %}
+<div class="container" ng-controller="CarregarCtrl">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header bg-color2">
+          <h3 class="card-title">Carregar Créditos</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+          <div class="col-12" ng-cloak>
+            <div class="row ctn">
+              <div class="col-sm-12" style="max-width: 500px;margin: auto;">
+                <div class="row">
+                  {{textField(12,"Documento","numero do documento","documento")}}
+                </div>
+          <!-- <div class="row">
+                  {{textField(12,"","R$0,00","asd","valor")}}
+                </div> -->
+                
+                <div class="row">
+                  <div class="card card-primary card-outline col-sm-12" style="height:100%">
+                     <div class="card-body box-profile">
+                        <div class="text-center" style="    transition: 0.2s linear all;">
+                           <img class="profile-user-img img-fluid img-circle"
+                           src="{{ url_for('static', filename="dist/img/logo2.png") }}"
+                           alt="User profile picture">
+                        </div>
+                        
+                        <div ng-show="selected">
+                           <h3 class="profile-username text-center">[{ selected.pessoa.nome }]</h3>
+                           <p class="text-muted text-center"></p>
+                           <ul class="list-group list-group-unbordered mb-3">
+                              <li class="list-group-item">
+                                 <b>Telefone</b> <a class="float-right">[{ selected.pessoa.telefone }]</a>
+                              </li>
+                              <li class="list-group-item">
+                                 <b>Documento</b> <a class="float-right">[{ selected.pessoa.documento.tipo + " - " +  selected.pessoa.numero_documento }]</a>
+                              </li>
+                              <li class="list-group-item">
+                                 <b>Crédito</b> <a class="float-right">[{ selected.credito |currency : "R$" }]</a>
+                              </li>
+                              <li class="list-group-item">
+                                 <b>Status</b> <a class="float-right">[{ selected.ativo?"Ativo":"Inativo" }]</a>
+                              </li>
+                           </ul>
+                           <div class="row">
+                              {{numberField(12,"Valor","R$0,00","valor",label_style="color:black")}}
+                           </div>
+                           {{ buttonSquare("CARREGAR","carregar()","margin-top:20px") }}
+                        </div>
+                     </div>
+                     <!-- /.card-body -->
+                  </div>
+               </div>
+
+
+                
+              </div>
+            </div>
+          </div>
+         </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block modals %}
+{% endblock %}
+
+
+
+{% block js %}
+
+<script src="{{ randomJs(url_for('static', filename="angularJS/todosAngular.js")) }}" data-semver="1.4.3"></script>
+<script>
+  //$("#modal-editar").modal("show")
+</script>
+{% endblock %}

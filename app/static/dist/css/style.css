@@ -1,0 +1,29 @@
+
+
+.bg-color{
+    background-image: linear-gradient(45deg, #039396, #97009a) !important;
+    background-image: linear-gradient(45deg, #000000, #3F51B5) !important;
+}
+
+.bg-color2{
+    background-image: linear-gradient(45deg, #039396, #97009a) !important;
+    background-image: linear-gradient(45deg, #000000, #3F51B5) !important;
+    color: white !important;
+}
+
+.bg-color-orig{
+    background-image: linear-gradient(45deg, #02dade, #f901ff);
+    background-image: linear-gradient(45deg, #000000, #3F51B5);
+    color: white !important;
+}
+
+
+.btn-login{margin-top: 50px;
+    background-color: #02dade;
+    background-image: linear-gradient(45deg, #02dade, #f901ff); /* Standard syntax (must be last) */
+    border-radius: 20px;
+    border:0px;
+    font-weight: 600;
+    color:white;
+    padding: 10px;
+}

@@ -1,0 +1,208 @@
+{% from "./macros/_macros.html" import textField,selectField,button,textAreaField,pwdField,checkField,numberField,buttonSquare %}
+{% extends 'base.html'%}
+
+
+{% block css %}
+<style>
+  td{
+    text-align: center;
+  }
+
+  .bg-success,.bg-danger{
+    height: 25px;
+    vertical-align: middle;
+    padding-top: 6px;
+  }
+
+  div>span{
+    /* font-size: large !important; */
+    width: 50%;
+    cursor: pointer;
+  }
+  th{
+    text-align: center;
+  }
+
+  span>i{
+    font-size: 1.5em;
+  }
+
+  span:hover >i{
+   color:white;
+  }
+
+  @media screen and (max-width: 768px) {
+    div>span{
+    /* font-size: large !important; */
+    width: 100%;
+  }
+
+  }
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container" ng-controller="TodasCtrl">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header bg-color2">
+          <h3 class="card-title">Todas as Máquinas</h3>
+
+          <div class="card-tools">
+            <div class="input-group input-group-sm" style="width: 150px;">
+              <input type="text" name="table_search" class="form-control float-right" placeholder="Pesquisar">
+
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+          <table class="table table-hover text-nowrap">
+            <thead>
+              <tr>
+                <th>Local</th>
+                <th>Tema</th>
+                <th>Nome</th>
+                <th>Preco</th>
+                <th>Status</th>
+                <th>Editar</th>
+              </tr>
+            </thead>
+            <tbody ng-cloak>
+              <tr ng-repeat="x in lista">
+                <td>[{x.sysUser.local}]</td>
+                <td>[{x.Tema.tema}]</td>
+                <td>[{x.nome}]</td>  
+                <td>[{ x.preco | currency:"R$"}]</td>
+                <td><div><span class="badge" ng-Class="x.ativa?'bg-success':'bg-danger'">[{  x.ativa?"ATIVA":"INATIVA" }]</span></div></td>
+                <td><div><span class="badge bg-warning" ng-click="{{ 'select(x)' if current_user.is_admin else 'editarStatus(x)' }}"><i class="fas fa-edit"></i></span></div></td>
+              </tr>
+            </tbody>
+          </table>
+         </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+
+<!-- ==================================MODALS=============================================== -->
+
+  <div class="modal fade bd-example-modal-lg" id="modal-editar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-color2">
+          <h4 class="modal-title" id="myLargeModalLabel">Editar Maquina</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body">
+            <div class="row">
+              {{selectField(3,"Locador","Selecione um locador","x.local for x in locadores","Selected.id_sys_user")}}
+              {{textField(3,"Nome","Insira o nome da máquina","Selected.nome") }}
+              {{selectField(3,"Tema","Selecione um tema","x.tema for x in temas","Selected.id_tema")}}
+              
+              <div class="col-sm-3">
+                <!-- select -->
+                <div class="form-group">
+                  <label>&nbsp</label>
+                  {{ buttonSquare("Novo Tema","openModal()","") }}
+
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              {{ textAreaField(6,"Descrição",3,"Descrição","Selected.descricao") }}
+              <div class="col-sm-6">
+                <div class="row">
+                  {{numberField(6,"Valor","R$0.00","Selected.preco") }}
+                  {{checkField(6,"Ativo","ATIVA","INATIVA","Selected.ativa")}}
+                  
+
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    {{ buttonSquare("Gerar Token","gerarToken()","") }}
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <div class="row" ng-show="token">
+              {{ textAreaField(12,"Token",2,"","token") }}
+            </div>
+
+            {{ button("Salvar","AlterarMaquina()","margin-top:80px") }}
+
+        </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade bd-example-modal-lg" id="modal-novoTema" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-color2">
+          <h4 class="modal-title" id="myLargeModalLabel">Novo Tema</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Nome</label>
+            <input type="text" class="form-control" placeholder="Insira o nome do tema" ng-model="NovoTemaValue">
+          </div>
+
+          {{ button("CADASTRAR TEMA","cadastraTema(NovoTemaValue)","") }}
+
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade bd-example-modal-lg" id="modal-status" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-color2">
+          <h4 class="modal-title" id="myLargeModalLabel">Novo Tema</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            {{checkField(3,"Ativo","ATIVA","INATIVA","Selected.ativa",id="toggle-demo2")}}
+          </div>
+          
+          {{ button("Salvar Status","salvarStatus()","") }}
+
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+
+
+{% block js %}
+
+<script src="{{ randomJs(url_for('static', filename="angularJS/todosAngular.js")) }}" data-semver="1.4.3"></script>
+<script>
+  //$("#modal-editar").modal("show")
+</script>
+{% endblock %}

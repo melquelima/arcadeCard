@@ -1,0 +1,27 @@
+
+
+
+{% macro menuHeader(name,icon="fa-copy",href="#",arrow=True) %}
+<a href="{{ href }}" class="nav-link {{ activeMenu3(href) if href != '#'else'' }}">
+    <i class="nav-icon fas {{ icon }}"></i>
+    <p>
+      {{ name }} {{ activeMenu3(href[1:]) if href != '#'else'' }}
+      {% if arrow %}
+        <i class="fas fa-angle-left right"></i>
+      {% endif %}
+    </p>
+  </a>
+{% endmacro %}
+
+
+{% macro menuitem(name,href,only_for_admin=False) %}
+  {% if only_for_admin and current_user.is_admin or not only_for_admin %}
+    <li class="nav-item">
+      <a href="{{ href }}" class="nav-link {{ activeMenu(href) }}">
+        <i class="far fa-circle nav-icon"></i>
+        <p>{{ name }}</p>
+      </a>
+    </li>
+  {% endif %}
+
+{% endmacro %}

@@ -1,0 +1,159 @@
+{% from "./macros/_macros.html" import textField,selectField,button,textAreaField,pwdField,checkField,numberField,buttonSquare %}
+
+{% import "./macros/_macroModal.html" as macros_modal with context %}
+
+{% extends 'base.html'%}
+
+
+{% block css %}
+<style>
+  td{
+    text-align: center;
+  }
+
+  .bg-success,.bg-danger{
+    height: 25px;
+    vertical-align: middle;
+    padding-top: 6px;
+  }
+
+  div>span{
+    /* font-size: large !important; */
+    width: 50%;
+    cursor: pointer;
+  }
+  th{
+    text-align: center;
+  }
+
+  span>i{
+    font-size: 1.5em;
+  }
+
+  span:hover >i{
+   color:white;
+  }
+
+  @media screen and (max-width: 768px) {
+    div>span{
+    /* font-size: large !important; */
+    width: 100%;
+  }
+
+  }
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container" ng-controller="LocadoresCtrl">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header bg-color2">
+          <h3 class="card-title">Todos os Locadores</h3>
+
+          <div class="card-tools">
+            <div class="input-group input-group-sm" style="width: 150px;">
+              <input type="text" name="table_search" class="form-control float-right" placeholder="Pesquisar">
+
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+          <table class="table table-hover text-nowrap">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Local</th>
+                <th>Qtd_Maquinas</th>
+                <th>Telefone</th>
+                <th>Status</th>
+                <th>Editar</th>
+                <th>Máquinas</th>
+              </tr>
+            </thead>
+            <tbody ng-cloak>
+              <tr ng-repeat="x in locadores">
+                <td>[{x.pessoa.nome}]</td>
+                <td>[{x.local}]</td>
+                <td>[{x.maquinas.length}]</td>
+                <td>[{x.pessoa.telefone}]</td>  
+                <td><div><span class="badge" ng-Class="x.ativo?'bg-success':'bg-danger'">[{  x.ativo?"ATIVO":"INATIVO" }]</span></div></td>
+                <td><div><span class="badge bg-warning" ng-click="select(x)"><i class="fas fa-edit"></i></span></div></td>
+                <td><a href="/maquinas/[{x.id}]"><div><span class="badge bg-info"><i class="fas fa-desktop"></i></span></div></td></a>
+              </tr>
+            </tbody>
+          </table>
+          
+         </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+
+
+<!-- ==================================MODALS=============================================== -->
+
+  <div class="modal fade bd-example-modal-lg" id="modal-editar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-color2">
+          <h4 class="modal-title" id="myLargeModalLabel">Editar Locador</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body">
+              <div class="row">
+                {{textField(3,"Nome","Insira o nome do locador","Selected.pessoa.nome")}}
+                {{textField(3,"Telefone","Insira o Telefone do locador","Selected.pessoa.telefone")}}
+                {{selectField(3,"tipo Documento","Selecione o tipo do seu documento","x.tipo for x in documentos","Selected.pessoa.documento")}}
+                {{textField(3,"Nº do documento","Insira o nº do documento","Selected.pessoa.numero_documento")}}
+              </div>
+              <div class="row">
+                {{textField(3,"Email","Insira o email do locador","Selected.pessoa.email")}}
+                {{textField(3,"Local","nome do local","Selected.local")}}
+                {{textField(6,"Endereco","Endereço do local","Selected.endereco")}}
+              </div>
+              <hr>
+              <div class="row">
+                {{textField(3,"Nome de Usuario","Usuario que o locador ira se conectar ao sistema","Selected.username")}}
+                {{pwdField(3,"Senha","senha do usuario","Selected.senha")}}
+                {{pwdField(3,"Confirmação de Senha"," confirme a senha do usuario","Selected.senha2")}}
+                {{checkField(3,"Ativo","ATIVO","INATIVO","Selected.ativo")}}
+              </div>
+
+              <div class="row">
+                {{ textAreaField(12,"Observações",3,"Observações","Selected.descricao") }}
+              </div>
+
+
+              {{ button("Salvar","salvaLocador()","margin-top: 80px;") }}
+
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+
+{% block js %}
+
+<script src="{{ randomJs(url_for('static', filename="angularJS/todosAngular.js")) }}" data-semver="1.4.3"></script>
+<script>
+  //$("#modal-editar").modal("show")
+</script>
+{% endblock %}

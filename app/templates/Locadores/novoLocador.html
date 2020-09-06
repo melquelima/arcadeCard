@@ -1,0 +1,69 @@
+{% from "./macros/_macros.html" import textField,selectField,button,textAreaField,pwdField,checkField %}
+
+{% extends 'base.html'%}
+
+{% block css %}
+<link href="{{ url_for('static', filename="toastr/toastr.min.css") }}" rel="stylesheet" />
+{% endblock %}
+
+
+{% block content %}
+<div class="container" ng-controller="NovoLocadorCtrl">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- general form elements disabled -->
+        <div class="card card-warning">
+          <div class="card-header bg-color2">
+            <h3 class="card-title">Dados do novo Locador</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+              <div class="row">
+                {{textField(3,"Nome","Insira o nome do locador","locador.nome")}}
+                {{textField(3,"Telefone","Insira o Telefone do locador","locador.telefone")}}
+                {{selectField(3,"tipo Documento","Selecione o tipo do seu documento","x.tipo for x in documentos","locador.id_doc_type")}}
+                {{textField(3,"Nº do documento","Insira o nº do documento","locador.numero_documento")}}
+              </div>
+              <div class="row">
+                {{textField(3,"Email","Insira o email do locador","locador.email")}}
+                {{textField(3,"Local","nome do local","locador.local")}}
+                {{textField(6,"Endereco","Endereço do local","locador.endereco")}}
+              </div>
+              <hr>
+              <div class="row">
+                {{textField(3,"Nome de Usuario","Usuario que o locatario ira se conectar ao sistema","locador.user_name")}}
+                {{pwdField(3,"Senha","senha do usuario","locador.senha")}}
+                {{pwdField(3,"Confirmação de Senha"," confirme a senha do usuario","locador.senha2")}}
+                {{checkField(3,"Ativo","ATIVO","INATIVO","locador.ativo")}}
+              </div>
+
+              <div class="row">
+                {{ textAreaField(12,"Observações",3,"Observações","locador.descricao") }}
+              </div>
+
+
+              {{ button("CADASTRAR","cadastraLocador()","margin-top: 80px;") }}
+
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+        <!-- general form elements disabled -->
+       
+        <!-- /.card -->
+      </div>
+      <!--/.col (right) -->
+    </div>
+    <!-- /.row -->
+  </div>
+{% endblock %}
+
+
+{% block modals %}
+{% endblock %}
+
+
+{% block js %}
+<script src="{{ randomJs(url_for('static', filename="angularJS/todosAngular.js")) }}" data-semver="1.4.3"></script>
+{% endblock %}
+

@@ -1,0 +1,62 @@
+
+
+{% macro modelEditarMaquina() %}
+<div class="modal fade bd-example-modal-lg" id="modal-editar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-color2">
+          <h4 class="modal-title" id="myLargeModalLabel">Editar Maquina</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body">
+            <div class="row">
+              {{selectField(3,"Locador","Selecione um locador","x.local for x in locadores","Selected.id_sys_user")}}
+              {{textField(3,"Nome","Insira o nome da máquina","Selected.nome") }}
+              {{selectField(3,"Tema","Selecione um tema","x.tema for x in temas","Selected.id_tema")}}
+              
+              <div class="col-sm-3">
+                <!-- select -->
+                <div class="form-group">
+                  <label>&nbsp</label>
+                  {{ buttonSquare("Novo Tema","openModal()","") }}
+  
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              {{ textAreaField(6,"Descrição",3,"Descrição","Selected.descricao") }}
+              <div class="col-sm-6">
+                <div class="row">
+                  {{numberField(6,"Valor","R$0.00","Selected.preco") }}
+                  {{checkField(6,"Ativo","ATIVA","INATIVA","Selected.ativa")}}
+                  
+                </div>
+                <div class="row">
+                  <div class="col-sm-12">
+                    {{ buttonSquare("Gerar Token","gerarToken()","") }}
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <div class="row" ng-show="token">
+              {{ textAreaField(12,"Token",2,"","token") }}
+            </div>
+  
+            {{ button("Salvar","AlterarMaquina()","margin-top:80px") }}
+  
+        </div>
+        </div>
+        
+      </div>
+    </div>
+</div>
+
+{% endmacro %}
+
+
+

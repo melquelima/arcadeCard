@@ -1,0 +1,64 @@
+{% from "./macros/_macros.html" import textField,selectField,button,textAreaField,pwdField,checkField,numberField %}
+
+{% extends 'base.html'%}
+
+{% block css %}
+<link href="{{ url_for('static', filename="toastr/toastr.min.css") }}" rel="stylesheet" />
+{% endblock %}
+
+
+{% block content %}
+<div class="container" ng-controller="NovoUsuarioCtrl">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- general form elements disabled -->
+        <div class="card card-warning">
+          <div class="card-header bg-color2">
+            <h3 class="card-title">Dados do novo Usuario</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body" ng-cloak>
+              <div class="row">
+                {{textField(4,"Nome","Insira o nome do usuario","Usuario.nome")}}
+                {{textField(4,"Telefone","Insira o Telefone do usuario","Usuario.telefone")}}
+                {{textField(4,"Email","Insira o email do usuario","Usuario.email")}}
+              </div>
+              <div class="row">
+                {{selectField(4,"tipo Documento","Selecione o tipo do seu documento","x.tipo for x in documentos","Usuario.id_doc_type")}}
+                {{textField(4,"Nº do documento","Insira o nº do documento","Usuario.numero_documento")}}
+                {{textField(4,"Tag","numero do cartao","Usuario.numero_cartao")}}
+              </div>
+              <hr>
+              <div class="row">
+                {{numberField(4,"Credito","R$0,00",disabled=True)}}
+                {{textField(4,"Jogo Livre Data","01/01/2020","","date",disabled=True)}}
+                {{checkField(4,"Ativo","ATIVO","INATIVO","Usuario.ativo")}}
+              </div>
+
+
+              {{ button("CADASTRAR","cadastraUsuario()","margin-top: 80px;") }}
+
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+        <!-- general form elements disabled -->
+       
+        <!-- /.card -->
+      </div>
+      <!--/.col (right) -->
+    </div>
+    <!-- /.row -->
+  </div>
+{% endblock %}
+
+
+{% block modals %}
+{% endblock %}
+
+
+{% block js %}
+<script src="{{ randomJs(url_for('static', filename="angularJS/todosAngular.js")) }}" data-semver="1.4.3"></script>
+
+{% endblock %}
+

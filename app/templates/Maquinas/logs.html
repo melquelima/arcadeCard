@@ -1,0 +1,122 @@
+{% extends 'base.html'%}
+
+
+{% block css %}
+<style>
+  td{
+    text-align: center;
+  }
+
+  .bg-success,.bg-danger{
+    height: 25px;
+    vertical-align: middle;
+    padding-top: 6px;
+  }
+
+  div>span{
+    /* font-size: large !important; */
+    width: 50%;
+    cursor: pointer;
+  }
+  th{
+    text-align: center;
+  }
+
+  span>i{
+    font-size: 1.5em;
+  }
+
+  span:hover >i{
+   color:white;
+  }
+
+  @media screen and (max-width: 768px) {
+    div>span{
+    /* font-size: large !important; */
+    width: 100%;
+  }
+
+  }
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container" ng-controller="LogsCtrl">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header bg-color2">
+          <h3 class="card-title">Todos os Logs</h3>
+
+          <div class="card-tools">
+            <div class="input-group input-group-sm" style="width: 150px;">
+              <input type="text" name="table_search" class="form-control float-right" placeholder="Pesquisar">
+
+              <div class="input-group-append">
+                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body table-responsive p-0">
+          <table class="table table-hover text-nowrap">
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Local</th>
+                <th>nome_pessoa</th>
+                <th>nome_maquina</th>
+                <th>Preco</th>
+              </tr>
+            </thead>
+            <tbody ng-cloak>
+              <tr ng-repeat="x in logs">
+                <td>[{ x.data }]</td>
+                <td>[{ x.maquina.sysUser.local }]</td>
+                <td>[{ x.cli_user.pessoa.nome }]</td>
+                <td>[{ x.maquina.nome }]</td>
+                <td>[{ x.preco | currency:"R$" }]</td>  
+                </tr>
+            </tbody>
+          </table>
+         </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block modals %}
+
+<!-- Large modal -->
+
+<div class="modal fade bd-example-modal-lg" id="modal-editar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-color2">
+        <h4 class="modal-title" id="myLargeModalLabel">Editar Maquina</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+
+{% block js %}
+<script src="{{ randomJs(url_for('static', filename="angularJS/todosAngular.js")) }}" data-semver="1.4.3"></script>
+{% endblock %}
