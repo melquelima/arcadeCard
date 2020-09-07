@@ -10,4 +10,4 @@ params = urllib.parse.quote_plus("DRIVER={SQL Server Native Client 10.0};SERVER=
 
 
 #SQLALCHEMY_DATABASE_URI = "sqlite:///storage.db"
-SQLALCHEMY_DATABASE_URI = "mssql+pyodbc://loginmaster:qwerty333#@arcadecard2.database.windows.net/principal?driver=SQL+Server"
+SQLALCHEMY_DATABASE_URI = "mssql+pyodbc://loginmaster:qwerty333#@arcadecard2.database.windows.net/principal?driver=ODBC+Driver+13+for+SQL+Server"
