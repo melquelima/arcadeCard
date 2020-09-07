@@ -1,3 +1,5 @@
+import pyodbc 
+
 DEBUG = True
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 CORS_HEADERS = 'Content-Type'
