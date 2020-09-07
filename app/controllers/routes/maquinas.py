@@ -36,4 +36,4 @@ def maquinas(id=None):
 @app.route("/logs")
 @login_required
 def logs():
-    return render_template("maquinas/logs.html",title="Logs",OBJ=[])
+    return render_template("/maquinas/logs.html",title="Logs",OBJ=[])
