@@ -193,7 +193,7 @@ app.controller('TodasCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce,ap
         obj.id_sys_user = obj.id_sys_user.id
         obj.id_tema = obj.id_tema.id
         console.log(typeof obj.preco)
-        obj.preco = parseFloat(obj.preco.replace(",","."));
+        obj.preco = parseFloat(obj.preco);
 
         api_service.putMaquina(obj).then((r)=>toastr.success('Dados salvos com sucesso!'))
     }

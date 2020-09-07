@@ -71,8 +71,8 @@ def Maquinas_put(fields):
 
 
 @app.route("/api/updateToken",methods=["POST"])
-@login_required
-@admin_required()
+#@login_required
+#@admin_required()
 @fields_required({"id":int})
 def updateToken(fields):
     maquina = Maquinas.query.get(fields["id"])
