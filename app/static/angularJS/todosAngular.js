@@ -193,7 +193,7 @@ app.controller('TodasCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce,ap
         obj.id_sys_user = obj.id_sys_user.id
         obj.id_tema = obj.id_tema.id
         console.log(typeof obj.preco)
-        obj.preco = parseFloat(obj.preco);
+        obj.preco = parseFloat(obj.preco.replace(",","."));
 
         api_service.putMaquina(obj).then((r)=>toastr.success('Dados salvos com sucesso!'))
     }
@@ -217,7 +217,6 @@ app.controller('NovaCtrl', INCLUDES.concat(['tema_svc',function (sc, $filter,$ht
     api_service.getTemas().then((r)=>sc.temas = r)
     api_service.getLocadores().then((r)=>{
         sc.locadores = r
-        toastr.success('Tema Cadastrado com sucesso!');
     })
 
 
@@ -244,7 +243,7 @@ app.controller('NovaCtrl', INCLUDES.concat(['tema_svc',function (sc, $filter,$ht
         obj.id_sys_user = obj.id_sys_user.id
         obj.id_tema = obj.id_tema.id
         console.log(typeof obj.preco)
-        obj.preco = parseFloat(obj.preco);
+        obj.preco = parseFloat(obj.preco.replace(",","."));
 
         
         api_service.postMaquina(obj).then((r)=>{
