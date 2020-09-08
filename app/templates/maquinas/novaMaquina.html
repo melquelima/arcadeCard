@@ -18,7 +18,8 @@
             <h3 class="card-title">Dados da nova máquina</h3>
           </div>
           <!-- /.card-header -->
-          <div class="card-body" ng-cloak>
+          {{ fields.loading("locadores.length") }}
+          <div class="card-body" ng-cloak ng-show="locadores.length">
               <div class="row">
                 {{fields.selectField(3,"Locador","Selecione um locador","x.local for x in locadores","novaMaquina.id_sys_user")}}
                 {{fields.textField(3,"Nome","Insira o nome da máquina","novaMaquina.nome") }}

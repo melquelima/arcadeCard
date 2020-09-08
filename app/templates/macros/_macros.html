@@ -14,6 +14,19 @@
 </div>
 {% endmacro %}
 
+{% macro loading(ng_hide) %}
+<div class="d-flex justify-content-center" style="margin: 10px;" 
+{{ tagProp("ng-hide",ng_hide) }}
+>
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>
+{% endmacro %}
+
+
+
+
 {% macro numberField(size,name,placeholder,ng_model="",style="''",label_style="", disabled=False,id="") %}
 <div class="col-sm-{{size}}">
     <div class="form-group">
@@ -90,3 +103,6 @@
     </div>
 </div>
 {% endmacro %}
+
+
+
