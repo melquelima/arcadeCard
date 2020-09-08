@@ -1,4 +1,3 @@
-{% from "./macros/_macros.html" import textField,selectField,button,textAreaField,pwdField,checkField,numberField,buttonSquare %}
 {% extends 'base.html'%}
 
 
@@ -106,41 +105,41 @@
         <div class="modal-body">
           <div class="card-body">
             <div class="row">
-              {{selectField(3,"Locador","Selecione um locador","x.local for x in locadores","Selected.id_sys_user")}}
-              {{textField(3,"Nome","Insira o nome da máquina","Selected.nome") }}
-              {{selectField(3,"Tema","Selecione um tema","x.tema for x in temas","Selected.id_tema")}}
+              {{fields.selectField(3,"Locador","Selecione um locador","x.local for x in locadores","Selected.id_sys_user")}}
+              {{fields.textField(3,"Nome","Insira o nome da máquina","Selected.nome") }}
+              {{fields.selectField(3,"Tema","Selecione um tema","x.tema for x in temas","Selected.id_tema")}}
               
               <div class="col-sm-3">
                 <!-- select -->
                 <div class="form-group">
                   <label>&nbsp</label>
-                  {{ buttonSquare("Novo Tema","openModal()","") }}
+                  {{fields.buttonSquare("Novo Tema","openModal()","") }}
 
                 </div>
               </div>
             </div>
             <div class="row">
-              {{ textAreaField(6,"Descrição",3,"Descrição","Selected.descricao") }}
+              {{fields.textAreaField(6,"Descrição",3,"Descrição","Selected.descricao") }}
               <div class="col-sm-6">
                 <div class="row">
-                  {{numberField(6,"Valor","R$0.00","Selected.preco") }}
-                  {{checkField(6,"Ativo","ATIVA","INATIVA","Selected.ativa")}}
+                  {{fields.numberField(6,"Valor","R$0.00","Selected.preco") }}
+                  {{fields.checkField(6,"Ativo","ATIVA","INATIVA","Selected.ativa")}}
                   
 
                 </div>
                 <div class="row">
                   <div class="col-sm-12">
-                    {{ buttonSquare("Gerar Token","gerarToken()","") }}
+                    {{fields.buttonSquare("Gerar Token","gerarToken()","") }}
                   </div>
                 </div>
               </div>
               
             </div>
             <div class="row" ng-show="token">
-              {{ textAreaField(12,"Token",2,"","token") }}
+              {{fields.textAreaField(12,"Token",2,"","token") }}
             </div>
 
-            {{ button("Salvar","AlterarMaquina()","margin-top:80px") }}
+            {{fields.button("Salvar","AlterarMaquina()","margin-top:80px") }}
 
         </div>
         </div>
@@ -164,7 +163,7 @@
             <input type="text" class="form-control" placeholder="Insira o nome do tema" ng-model="NovoTemaValue">
           </div>
 
-          {{ button("CADASTRAR TEMA","cadastraTema(NovoTemaValue)","") }}
+          {{ fields.button("CADASTRAR TEMA","cadastraTema(NovoTemaValue)","") }}
 
         </div>
         
@@ -183,10 +182,10 @@
         </div>
         <div class="modal-body">
           <div class="form-group">
-            {{checkField(3,"Ativo","ATIVA","INATIVA","Selected.ativa",id="toggle-demo2")}}
+            {{fields.checkField(3,"Ativo","ATIVA","INATIVA","Selected.ativa",id="toggle-demo2")}}
           </div>
           
-          {{ button("Salvar Status","salvarStatus()","") }}
+          {{ fields.button("Salvar Status","salvarStatus()","") }}
 
         </div>
         

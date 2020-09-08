@@ -1,5 +1,3 @@
-{% from "./macros/_macros.html" import textField,selectField,button,textAreaField,pwdField,checkField,buttonSquare %}
-
 {% extends 'base.html'%}
 
 {% block css %}
@@ -22,9 +20,9 @@
           <!-- /.card-header -->
           <div class="card-body" ng-cloak>
               <div class="row">
-                {{selectField(3,"Locador","Selecione um locador","x.local for x in locadores","novaMaquina.id_sys_user")}}
-                {{textField(3,"Nome","Insira o nome da máquina","novaMaquina.nome") }}
-                {{selectField(3,"Tema","Selecione um tema","x.tema for x in temas","novaMaquina.id_tema")}}
+                {{fields.selectField(3,"Locador","Selecione um locador","x.local for x in locadores","novaMaquina.id_sys_user")}}
+                {{fields.textField(3,"Nome","Insira o nome da máquina","novaMaquina.nome") }}
+                {{fields.selectField(3,"Tema","Selecione um tema","x.tema for x in temas","novaMaquina.id_tema")}}
                 
                 <div class="col-sm-3">
                   <!-- select -->
@@ -43,12 +41,12 @@
                 </div>
               </div>
               <div class="row">
-                {{ textAreaField(6,"Descrição",3,"Descrição","novaMaquina.descricao") }}
-                {{numberField(3,"Valor","R$0.00","novaMaquina.preco") }}
-                {{checkField(3,"Ativo","ATIVO","INATIVO","novaMaquina.ativa")}}
+                {{fields.textAreaField(6,"Descrição",3,"Descrição","novaMaquina.descricao") }}
+                {{fields.numberField(3,"Valor","R$0.00","novaMaquina.preco") }}
+                {{fields.checkField(3,"Ativo","ATIVO","INATIVO","novaMaquina.ativa")}}
               </div>
 
-              {{ button("CADASTRAR","cadastraMaquina(novaMaquina)","") }}
+              {{ fields.button("CADASTRAR","cadastraMaquina(novaMaquina)","") }}
 
           </div>
           <!-- /.card-body -->
@@ -82,7 +80,7 @@
           </div>
 
 
-          {{ button("CADASTRAR TEMA","cadastraTema(NovoTemaValue)","") }}
+          {{ fields.button("CADASTRAR TEMA","cadastraTema(NovoTemaValue)","") }}
 
         </div>
         

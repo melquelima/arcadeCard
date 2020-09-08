@@ -4,7 +4,12 @@
 <div class="col-sm-{{size}}">
     <div class="form-group">
       <label>{{name}}</label>
-      <input type="text" class="form-control" placeholder="{{placeholder}}" ng-model="{{ ng_model }}" {{ "id="+id if id != "" else "" }} {{ 'disabled' if disabled else '' }}>
+      <input type="text" class="form-control"
+        {{ tagProp("ng-model",ng_model) }}
+        {{ tagProp("placeholder",placeholder) }}
+        {{ tagProp("id",id) }}
+        {{ 'disabled' if disabled else '' }}
+      >
     </div>
 </div>
 {% endmacro %}

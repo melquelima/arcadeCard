@@ -1,5 +1,3 @@
-{% from "./macros/_macros.html" import textField,selectField,button,textAreaField,pwdField,checkField,numberField %}
-
 {% extends 'base.html'%}
 
 {% block css %}
@@ -19,24 +17,24 @@
           <!-- /.card-header -->
           <div class="card-body" ng-cloak>
               <div class="row">
-                {{textField(4,"Nome","Insira o nome do usuario","Usuario.nome")}}
-                {{textField(4,"Telefone","Insira o Telefone do usuario","Usuario.telefone")}}
-                {{textField(4,"Email","Insira o email do usuario","Usuario.email")}}
+                {{fields.textField(4,"Nome","Insira o nome do usuario","Usuario.nome")}}
+                {{fields.textField(4,"Telefone","Insira o Telefone do usuario","Usuario.telefone")}}
+                {{fields.textField(4,"Email","Insira o email do usuario","Usuario.email")}}
               </div>
               <div class="row">
-                {{selectField(4,"tipo Documento","Selecione o tipo do seu documento","x.tipo for x in documentos","Usuario.id_doc_type")}}
-                {{textField(4,"Nº do documento","Insira o nº do documento","Usuario.numero_documento")}}
-                {{textField(4,"Tag","numero do cartao","Usuario.numero_cartao")}}
+                {{fields.selectField(4,"tipo Documento","Selecione o tipo do seu documento","x.tipo for x in documentos","Usuario.id_doc_type")}}
+                {{fields.textField(4,"Nº do documento","Insira o nº do documento","Usuario.numero_documento")}}
+                {{fields.textField(4,"Tag","numero do cartao","Usuario.numero_cartao")}}
               </div>
               <hr>
               <div class="row">
-                {{numberField(4,"Credito","R$0,00",disabled=True)}}
-                {{textField(4,"Jogo Livre Data","01/01/2020","","date",disabled=True)}}
-                {{checkField(4,"Ativo","ATIVO","INATIVO","Usuario.ativo")}}
+                {{fields.numberField(4,"Credito","R$0,00",disabled=True)}}
+                {{fields.textField(4,"Jogo Livre Data","01/01/2020","","date",disabled=True)}}
+                {{fields.checkField(4,"Ativo","ATIVO","INATIVO","Usuario.ativo")}}
               </div>
 
 
-              {{ button("CADASTRAR","cadastraUsuario()","margin-top: 80px;") }}
+              {{fields.button("CADASTRAR","cadastraUsuario()","margin-top: 80px;") }}
 
           </div>
           <!-- /.card-body -->

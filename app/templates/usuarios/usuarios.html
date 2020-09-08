@@ -1,4 +1,3 @@
-{% from "./macros/_macros.html" import textField,selectField,button,textAreaField,pwdField,checkField,numberField,buttonSquare %}
 {% extends 'base.html'%}
 
 
@@ -107,24 +106,24 @@
         <div class="modal-body">
           <div class="card-body" ng-cloak>
             <div class="row">
-              {{textField(4,"Nome","Insira o nome do usuario","Selected.pessoa.nome")}}
-              {{textField(4,"Telefone","Insira o Telefone do usuario","Selected.pessoa.telefone")}}
-              {{textField(4,"Email","Insira o email do usuario","Selected.pessoa.email")}}
+              {{fields.textField(4,"Nome","Insira o nome do usuario","Selected.pessoa.nome")}}
+              {{fields.textField(4,"Telefone","Insira o Telefone do usuario","Selected.pessoa.telefone")}}
+              {{fields.textField(4,"Email","Insira o email do usuario","Selected.pessoa.email")}}
             </div>
             <div class="row">
-              {{selectField(4,"tipo Documento","Selecione o tipo do seu documento","x.tipo for x in documentos","Selected.pessoa.documento")}}
-              {{textField(4,"Nº do documento","Insira o nº do documento","Selected.pessoa.numero_documento")}}
-              {{textField(4,"Tag","numero do cartao","Selected.numero_cartao")}}
+              {{fields.selectField(4,"tipo Documento","Selecione o tipo do seu documento","x.tipo for x in documentos","Selected.pessoa.documento")}}
+              {{fields.textField(4,"Nº do documento","Insira o nº do documento","Selected.pessoa.numero_documento")}}
+              {{fields.textField(4,"Tag","numero do cartao","Selected.numero_cartao")}}
             </div>
             <hr>
             <div class="row">
-              {{numberField(4,"Credito","R$0,00",ng_model="Selected.credito",disabled=True)}}
-              {{textField(4,"Jogo Livre Data","01/01/2020","Selected.freeplay_data_exp","date")}}
-              {{checkField(4,"Ativo","ATIVO","INATIVO","Selected.ativo")}}
+              {{fields.numberField(4,"Credito","R$0,00",ng_model="Selected.credito",disabled=True)}}
+              {{fields.textField(4,"Jogo Livre Data","01/01/2020","Selected.freeplay_data_exp","date")}}
+              {{fields.checkField(4,"Ativo","ATIVO","INATIVO","Selected.ativo")}}
             </div>
 
           
-            {{ button("Salvar","salvaUsuario()","margin-top: 80px;") }}
+            {{fields.button("Salvar","salvaUsuario()","margin-top: 80px;") }}
 
           </div>
         </div>
@@ -149,7 +148,7 @@
           </div>
 
 
-          {{ button("CADASTRAR TEMA","cadastraTema(NovoTemaValue)","") }}
+          {{fields.button("CADASTRAR TEMA","cadastraTema(NovoTemaValue)","") }}
 
         </div>
         

@@ -1,7 +1,3 @@
-{% from "./macros/_macros.html" import textField,selectField,button,textAreaField,pwdField,checkField,numberField,buttonSquare %}
-
-{% import "./macros/_macroModal.html" as macros_modal with context %}
-
 {% extends 'base.html'%}
 
 
@@ -113,30 +109,30 @@
         <div class="modal-body">
           <div class="card-body">
               <div class="row">
-                {{textField(3,"Nome","Insira o nome do locador","Selected.pessoa.nome")}}
-                {{textField(3,"Telefone","Insira o Telefone do locador","Selected.pessoa.telefone")}}
-                {{selectField(3,"tipo Documento","Selecione o tipo do seu documento","x.tipo for x in documentos","Selected.pessoa.documento")}}
-                {{textField(3,"Nº do documento","Insira o nº do documento","Selected.pessoa.numero_documento")}}
+                {{fields.textField(3,"Nome","Insira o nome do locador","Selected.pessoa.nome")}}
+                {{fields.textField(3,"Telefone","Insira o Telefone do locador","Selected.pessoa.telefone")}}
+                {{fields.selectField(3,"tipo Documento","Selecione o tipo do seu documento","x.tipo for x in documentos","Selected.pessoa.documento")}}
+                {{fields.textField(3,"Nº do documento","Insira o nº do documento","Selected.pessoa.numero_documento")}}
               </div>
               <div class="row">
-                {{textField(3,"Email","Insira o email do locador","Selected.pessoa.email")}}
-                {{textField(3,"Local","nome do local","Selected.local")}}
-                {{textField(6,"Endereco","Endereço do local","Selected.endereco")}}
+                {{fields.textField(3,"Email","Insira o email do locador","Selected.pessoa.email")}}
+                {{fields.textField(3,"Local","nome do local","Selected.local")}}
+                {{fields.textField(6,"Endereco","Endereço do local","Selected.endereco")}}
               </div>
               <hr>
               <div class="row">
-                {{textField(3,"Nome de Usuario","Usuario que o locador ira se conectar ao sistema","Selected.username")}}
-                {{pwdField(3,"Senha","senha do usuario","Selected.senha")}}
-                {{pwdField(3,"Confirmação de Senha"," confirme a senha do usuario","Selected.senha2")}}
-                {{checkField(3,"Ativo","ATIVO","INATIVO","Selected.ativo")}}
+                {{fields.textField(3,"Nome de Usuario","Usuario que o locador ira se conectar ao sistema","Selected.username")}}
+                {{fields.pwdField(3,"Senha","senha do usuario","Selected.senha")}}
+                {{fields.pwdField(3,"Confirmação de Senha"," confirme a senha do usuario","Selected.senha2")}}
+                {{fields.checkField(3,"Ativo","ATIVO","INATIVO","Selected.ativo")}}
               </div>
 
               <div class="row">
-                {{ textAreaField(12,"Observações",3,"Observações","Selected.descricao") }}
+                {{fields. textAreaField(12,"Observações",3,"Observações","Selected.descricao") }}
               </div>
 
 
-              {{ button("Salvar","salvaLocador()","margin-top: 80px;") }}
+              {{fields. button("Salvar","salvaLocador()","margin-top: 80px;") }}
 
           </div>
         </div>
