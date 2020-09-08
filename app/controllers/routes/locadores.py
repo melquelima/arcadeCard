@@ -15,7 +15,7 @@ def novoLocador():
 @login_required
 @admin_required_route()
 def Locadores():
-    return render_template("locadores/Locadores.html",title="Locadores",OBJ=[])
+    return render_template("locadores/locadores.html",title="Locadores",OBJ=[])
 
 
 
