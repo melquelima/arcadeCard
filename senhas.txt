@@ -1,0 +1,8 @@
+
+registro-BR:
+Login: VDSDU1
+Senha: agmas2315
+
+azure:
+Login:new_agmas@hotmail.com
+Senha:agmas4569

@@ -26,10 +26,10 @@ def usuarios_get():
 @fields_required({"nome":str,"telefone":str,"email":str,"id_doc_type":int,"numero_documento":str,"numero_cartao":str,"freeplay_data_exp":str,"ativo":bool})
 def usuarios_post(fields):
     try:
-        valid = validate(fields["freeplay_data_exp"],"%d/%m/%y %H:%M")
-        if (not valid[0]) and fields["freeplay_data_exp"] != "": return "o campo freeplay_data_exp contem um formato inválido",400
+        #valid = validate(fields["freeplay_data_exp"],"%d/%m/%y %H:%M")
+        #if (not valid[0]) and fields["freeplay_data_exp"] != "": return "o campo freeplay_data_exp contem um formato inválido",400
 
-        fields["freeplay_data_exp"] = valid[1] if valid[0] else None 
+        #fields["freeplay_data_exp"] = valid[1] if valid[0] else None 
 
         p = Pessoa.query.filter(or_(Pessoa.nome==fields["nome"],Pessoa.numero_documento == fields["numero_documento"])).first()
         if not p:
@@ -37,7 +37,7 @@ def usuarios_post(fields):
             if not cliu_ser:
                 p = Pessoa(fields["nome"],fields["telefone"],fields["email"],fields["id_doc_type"],fields["numero_documento"])
                 p.save()
-                c = CliUsers(current_user.id,p.id,fields["numero_cartao"],0,fields["freeplay_data_exp"],fields["ativo"])
+                c = CliUsers(current_user.id,p.id,fields["numero_cartao"],0,None,fields["ativo"])
                 c.save()
                 return json.loads(CliUserSchema().dumps(c))
             else:
