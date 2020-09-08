@@ -5,11 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: flask",
+            "name": "Python: Arquivo Atual",
             "type": "python",
             "request": "launch",
-            "program": "C:\\Users\\Melque\\Documents\\Git\\Python\\Exemplos\\Flask\\LikiSushi\\run.py",
-            "console": "integratedTerminal"
+            "program": "${workspaceFolder}\\run.py",
+            "console": "integratedTerminal",
+            "args" : ["runserver"]
         }
     ]
 }

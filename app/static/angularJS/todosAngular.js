@@ -243,7 +243,7 @@ app.controller('NovaCtrl', INCLUDES.concat(['tema_svc',function (sc, $filter,$ht
         obj.id_sys_user = obj.id_sys_user.id
         obj.id_tema = obj.id_tema.id
         console.log(typeof obj.preco)
-        obj.preco = parseFloat(obj.preco.replace(",","."));
+        obj.preco = parseFloat(obj.preco);
 
         
         api_service.postMaquina(obj).then((r)=>{

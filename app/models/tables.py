@@ -24,17 +24,19 @@ class Maquinas(db.Model):
     descricao   = Column(String())
     preco       = Column(Float(),nullable=False)
     ativa       = Column(Boolean(),nullable=False)
+    free        = Column(Boolean(),nullable=False)
     token       = Column(String(),nullable=False)
     Tema        = db.relationship("Temas",foreign_keys=id_tema)
     sysUser     = db.relationship("SysUser",foreign_keys=id_sys_user)
 
-    def __init__(self,id_tema,id_sys_user,nome,descricao,preco,ativa,token="*"):
+    def __init__(self,id_tema,id_sys_user,nome,descricao,preco,ativa,free=0,token="*"):
         self.id_tema        =  id_tema
         self.id_sys_user    = id_sys_user
         self.nome           =  nome
         self.descricao      =  descricao
         self.preco          =  preco
         self.ativa          =  ativa
+        self.free           =  free
         self.token          =  token
 
     def __repr__(self):

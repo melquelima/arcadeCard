@@ -3,6 +3,8 @@ from flask_cors import CORS, cross_origin
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_login import LoginManager
+from flask_migrate import Migrate, MigrateCommand
+from flask_script import Manager
 import os
 
 app = Flask(__name__)
@@ -14,6 +16,11 @@ db = SQLAlchemy(app)
 lm = LoginManager()
 lm.init_app(app)
 lm.needs_refresh_message = (u"Session timedout, please re-login")
+
+
+migrate = Migrate(app,db)
+manager = Manager(app)
+manager.add_command('db',MigrateCommand)
 
 from app.models.filters import *
 
