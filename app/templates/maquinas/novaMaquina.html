@@ -42,9 +42,16 @@
                 </div>
               </div>
               <div class="row">
-                {{fields.textAreaField(6,"Descrição",3,"Descrição","novaMaquina.descricao") }}
-                {{fields.numberField(3,"Valor","R$0.00","novaMaquina.preco") }}
-                {{fields.checkField(3,"Ativo","ATIVO","INATIVO","novaMaquina.ativa")}}
+                {{fields.textAreaField(4,"Descrição",3,"Descrição","novaMaquina.descricao") }}
+                <div class="col-sm-8">
+                  <div class="row">
+                    {{fields.numberField(4,"Valor","R$0.00","novaMaquina.preco") }}
+                    {{fields.checkField(4,"Ativo","ATIVO","INATIVO","novaMaquina.ativa")}}
+                    {{fields.checkField(4,"Free","SIM","NÃO","novaMaquina.free",id="toggle-demo2")}}
+  
+                  </div>
+                </div>
+                
               </div>
 
               {{ fields.button("CADASTRAR","cadastraMaquina(novaMaquina)","") }}

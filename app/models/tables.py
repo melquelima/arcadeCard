@@ -2,6 +2,7 @@ from app import db
 from sqlalchemy import Float,Column,Integer,String,ForeignKey,DateTime,Time,Boolean
 from datetime import datetime,date,timedelta
 
+
 class Temas(db.Model):
     __tablename__ = "temas"
 
@@ -29,7 +30,7 @@ class Maquinas(db.Model):
     Tema        = db.relationship("Temas",foreign_keys=id_tema)
     sysUser     = db.relationship("SysUser",foreign_keys=id_sys_user)
 
-    def __init__(self,id_tema,id_sys_user,nome,descricao,preco,ativa,free=0,token="*"):
+    def __init__(self,id_tema,id_sys_user,nome,descricao,preco,ativa,free=False,token="*"):
         self.id_tema        =  id_tema
         self.id_sys_user    = id_sys_user
         self.nome           =  nome
@@ -120,6 +121,15 @@ class CliUsers(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+    
+    @property
+    def free_time(self):
+        tm = timedelta() if not self.freeplay_data_exp else self.freeplay_data_exp - datetime.now()
+        tm = timedelta() if tm.total_seconds() <= 0 else tm
+        return tm
+    @property
+    def has_free_time(self):
+        return self.free_time.total_seconds > 0
 
 class LogMaquinas(db.Model):
     __tablename__ = "log_maquinas"

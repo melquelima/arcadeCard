@@ -20,7 +20,7 @@ def Maquinas_fnc():
 @app.route("/api/maquinas",methods=["POST"])
 @login_required
 @admin_required()
-@fields_required({"id_tema":int,"id_sys_user":int,"nome":str,"descricao":str,"preco":float,"ativa":bool})
+@fields_required({"id_tema":int,"id_sys_user":int,"nome":str,"descricao":str,"preco":float,"ativa":bool,"free":bool})
 def Maquinas_post(fields):
     if fields["nome"] == "": return "O campo 'nome' não pode estar em branco",400
 
@@ -44,7 +44,7 @@ def Maquinas_post(fields):
 @app.route("/api/maquinas",methods=["PUT"])
 @login_required
 @admin_required()
-@fields_required({"id":int,"id_tema":int,"id_sys_user":int,"nome":str,"descricao":str,"preco":float,"ativa":bool})
+@fields_required({"id":int,"id_tema":int,"id_sys_user":int,"nome":str,"descricao":str,"preco":float,"ativa":bool,"free":bool})
 def Maquinas_put(fields):
     if fields["nome"] == "": return "O campo 'nome' não pode estar em branco",400
 
@@ -60,6 +60,7 @@ def Maquinas_put(fields):
                 maquina.descricao = fields["descricao"]
                 maquina.preco = fields["preco"]
                 maquina.ativa = fields["ativa"]
+                maquina.free = fields["free"]
                 db.session.commit()
                 return "OK"
             else:

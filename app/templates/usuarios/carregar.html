@@ -1,4 +1,3 @@
-{% from "./macros/_macros.html" import textField,selectField,button,textAreaField,pwdField,checkField,numberField,buttonSquare %}
 {% extends 'base.html'%}
 
 
@@ -48,10 +47,10 @@
             <div class="row ctn">
               <div class="col-sm-12" style="max-width: 500px;margin: auto;">
                 <div class="row">
-                  {{textField(12,"Documento","numero do documento","documento")}}
+                  {{fields.textField(12,"Documento","numero do documento","documento")}}
                 </div>
           <!-- <div class="row">
-                  {{textField(12,"","R$0,00","asd","valor")}}
+                  {{fields.textField(12,"","R$0,00","asd","valor")}}
                 </div> -->
                 
                 <div class="row">
@@ -81,9 +80,10 @@
                               </li>
                            </ul>
                            <div class="row">
-                              {{numberField(12,"Valor","R$0,00","valor",label_style="color:black")}}
+                              {{fields.numberField(6,"Valor","R$0,00","valor",label_style="color:black")}}
+                              {{fields.numberField(6,"Free","0","free",label_style="color:black")}}
                            </div>
-                           {{ buttonSquare("CARREGAR","carregar()","margin-top:20px") }}
+                           {{fields.buttonSquare("CARREGAR","carregar()","margin-top:20px") }}
                         </div>
                      </div>
                      <!-- /.card-body -->

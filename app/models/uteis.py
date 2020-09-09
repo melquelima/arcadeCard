@@ -152,7 +152,7 @@ def valida_transacao():
                     if cliUsr:
                         if cliUsr.ativo:
                             if cliUsr.sysUser.ativo:
-                                if cliUsr.credito >= mch.preco:
+                                if cliUsr.credito >= mch.preco or cliUsr.has_free_time:
                                     kwargs["maquina"]   = mch 
                                     kwargs["cli_user"]  = cliUsr 
                                     return function(*args, **kwargs)

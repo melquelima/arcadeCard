@@ -5,7 +5,7 @@ from app.models.uteis import *
 from app.models.tables import CliUsers,Pessoa,LogVendas
 from app.models.marshmallow import CliUserSchema
 from sqlalchemy import or_
-from datetime import datetime as dt
+from datetime import datetime as dt, timedelta as td
 import json
 
 
@@ -23,7 +23,7 @@ def usuarios_get():
 
 @app.route("/api/usuarios",methods=["POST"])
 @login_required
-@fields_required({"nome":str,"telefone":str,"email":str,"id_doc_type":int,"numero_documento":str,"numero_cartao":str,"freeplay_data_exp":str,"ativo":bool})
+@fields_required({"nome":str,"telefone":str,"email":str,"id_doc_type":int,"numero_documento":str,"numero_cartao":str,"ativo":bool})
 def usuarios_post(fields):
     try:
         #valid = validate(fields["freeplay_data_exp"],"%d/%m/%y %H:%M")
@@ -91,6 +91,7 @@ def usuarios_credit(fields):
     cli_user = CliUsers.query.get(fields["id_user"])
     if cli_user:
         cli_user.credito += fields["credito"]
+        cli_user.freeplay_data_exp = dt.now() + td(days=fields["free_play_days"])
         logvendas = LogVendas(dt.now(),current_user.id,cli_user.id,fields["credito"], fields["free_play_days"],False)
         logvendas.save()
         return "Creditos inseridos com sucesso!"

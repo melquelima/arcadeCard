@@ -154,6 +154,7 @@ app.controller('TodasCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce,ap
         sc.Selected.id_tema = sc.temas.filter((i)=>{if(i.id == item.Tema.id)return i})[0]
         sc.Selected.id_sys_user = sc.locadores.filter((i)=>{if(i.id == item.sysUser.id)return i})[0]
         $('#toggle-demo').bootstrapToggle(item.ativa?'on':'off')
+        $('#toggle-demo2').bootstrapToggle(item.free?'on':'off')
         sc.token = ""
         $("#modal-editar").modal("show")
 
@@ -431,7 +432,7 @@ app.controller('CarregarCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce
             return toastr.error("valor inválido");
         }
 
-        data={id_user:sc.selected.id,credito:sc.valor,free_play_days:0}
+        data={id_user:sc.selected.id,credito:sc.valor,free_play_days:sc.free}
         api_service.creditUsuarios(data).then((r)=>{
             toastr.success(r);
             sc.selected.credito += sc.valor

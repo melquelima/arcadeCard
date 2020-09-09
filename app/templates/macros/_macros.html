@@ -84,7 +84,7 @@
 <div class="container-login100-form-btn" style="{{style}}">
   <div class="wrap-login100-form-btn" style="border-radius: 5px;">
     <div class="login100-form-bgbtn"></div>
-    <button class="login100-form-btn" style="height: 40px;" ng-click="{{ ng_click }}">
+    <button class="login100-form-btn" style="height: 35px;" ng-click="{{ ng_click }}">
       {{ valor }}
     </button>
   </div>
@@ -97,8 +97,10 @@
 {% macro checkField(size,name,onText,offText,ng_model,id="toggle-demo") %}
 <div class="col-sm-{{size}}">
     <div class="form-group">
+      {% if name != "" %}
       <label>{{name}}</label>
       <br>
+      {% endif %}
       <input id="{{ id }}" type="checkbox" data-width="100%"  checked data-toggle="toggle" data-on="{{onText}}" data-off="{{offText}}" data-onstyle="success" data-offstyle="danger" ng-model="{{ ng_model }}">
     </div>
 </div>

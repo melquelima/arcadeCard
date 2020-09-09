@@ -70,6 +70,7 @@
                 <th>Documento</th>
                 <th>Tag</th>
                 <th>Credito</th>
+                <th>Free</th>
                 <th>Status</th>
                 <th>Editar</th>
               </tr>
@@ -81,6 +82,7 @@
                 <td>[{x.pessoa.numero_documento}]</td>
                 <td>[{x.numero_cartao}]</td>
                 <td>[{ x.credito | currency:"R$"}]</td>
+                <td>[{ x.free_time}]</td>
                 <td><div><span class="badge" style="width: auto;" ng-Class="x.ativo?'bg-success':'bg-danger'">[{  x.ativo?"ATIVO":"INATIVO" }]</span></div></td>
                 <td><div><span class="badge bg-warning" ng-click="select(x)"><i class="fas fa-edit"></i></span></div></td>
               </tr>

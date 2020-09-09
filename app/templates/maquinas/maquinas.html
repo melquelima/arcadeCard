@@ -76,6 +76,7 @@
                 <th>Tema</th>
                 <th>Nome</th>
                 <th>Preco</th>
+                <th>Free</th>
                 <th>Status</th>
                 <th>Editar</th>
               </tr>
@@ -86,6 +87,7 @@
                 <td>[{x.Tema.tema}]</td>
                 <td>[{x.nome}]</td>  
                 <td>[{ x.preco | currency:"R$"}]</td>
+                <td><div><span class="badge" ng-Class="x.free?'bg-success':'bg-danger'">[{  x.free?"SIM":"NÃO" }]</span></div></td>
                 <td><div><span class="badge" ng-Class="x.ativa?'bg-success':'bg-danger'">[{  x.ativa?"ATIVA":"INATIVA" }]</span></div></td>
                 <td><div><span class="badge bg-warning" ng-click="{{ 'select(x)' if current_user.is_admin else 'editarStatus(x)' }}"><i class="fas fa-edit"></i></span></div></td>
               </tr>
@@ -126,12 +128,12 @@
               </div>
             </div>
             <div class="row">
-              {{fields.textAreaField(6,"Descrição",3,"Descrição","Selected.descricao") }}
-              <div class="col-sm-6">
+              {{fields.textAreaField(4,"Descrição",3,"Descrição","Selected.descricao") }}
+              <div class="col-sm-8">
                 <div class="row">
-                  {{fields.numberField(6,"Valor","R$0.00","Selected.preco") }}
-                  {{fields.checkField(6,"Ativo","ATIVA","INATIVA","Selected.ativa")}}
-                  
+                  {{fields.numberField(4,"Valor","R$0.00","Selected.preco") }}
+                  {{fields.checkField(4,"Ativo","ATIVA","INATIVA","Selected.ativa")}}
+                  {{fields.checkField(4,"Free","SIM","NÃO","Selected.free",id="toggle-demo2")}}
 
                 </div>
                 <div class="row">
