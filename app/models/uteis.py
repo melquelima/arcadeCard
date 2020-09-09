@@ -161,7 +161,7 @@ def valida_transacao():
                             else:
                                 return "Locador inativo!",400
                         else:
-                            return "Usuário inativo!",400
+                            return "Usuario inativo!",400
                     else:
                         return "Usuario nao encontrado!",400
                 else:

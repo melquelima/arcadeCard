@@ -15,14 +15,14 @@ def validate(fields,maquina,cli_user):
 
     if not maquina.free: #quando a maquina não esta gratis
         if cli_user.has_free_time():
-            msg = f"Tempo restante: {cli_user.free_time(True)}"
+            msg = f"{cli_user.pessoa.nome}\nTempo restante: {cli_user.free_time(True)}"
         else:
             preco = maquina.preco
             cli_user.credito -= maquina.preco
-            msg = f"Saldo atual: R${cli_user.credito:.2f}"
+            msg = f"{cli_user.pessoa.nome}\nSaldo atual: R${cli_user.credito:.2f}"
     else:
         preco = 0
-        msg = "grátis aproveite!"
+        msg = f"{cli_user.pessoa.nome}\ngratis aproveite!"
 
     id_sys_user = maquina.sysUser.id
 
