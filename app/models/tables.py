@@ -1,7 +1,7 @@
 from app import db
 from sqlalchemy import Float,Column,Integer,String,ForeignKey,DateTime,Time,Boolean
 from datetime import datetime,date,timedelta
-
+from app.models.uteis2 import strfdelta
 
 class Temas(db.Model):
     __tablename__ = "temas"
@@ -122,14 +122,14 @@ class CliUsers(db.Model):
         db.session.delete(self)
         db.session.commit()
     
-    @property
-    def free_time(self):
+    
+    def free_time(self,formated=False):
         tm = timedelta() if not self.freeplay_data_exp else self.freeplay_data_exp - datetime.now()
         tm = timedelta() if tm.total_seconds() <= 0 else tm
-        return tm
-    @property
+        return tm if not formated else strfdelta(tm,"{hours}:{minutes}")
+
     def has_free_time(self):
-        return self.free_time.total_seconds > 0
+        return self.free_time().total_seconds() > 0
 
 class LogMaquinas(db.Model):
     __tablename__ = "log_maquinas"

@@ -2,7 +2,7 @@
 from app import ma
 from marshmallow import Schema, fields
 from datetime import datetime as dt, timedelta as td
-
+from app.models.uteis2 import strfdelta
 
 class DocumentoSchema(ma.Schema):
     id                  = fields.Integer()
@@ -34,7 +34,7 @@ class CliUserSchema(ma.Schema):
     credito             = fields.Float()    
     ativo               = fields.Boolean()    
     freeplay_data_exp   = fields.DateTime()
-    free_time           = fields.Function(lambda obj:strfdelta(obj.free_time,"{hours}:{minutes}"))
+    free_time           = fields.Function(lambda obj:strfdelta(obj.free_time(),"{hours}:{minutes}"))
     pessoa              = fields.Nested(PessoaSchema)
     sysUser             = fields.Nested(SysUserSchema)
 
@@ -76,8 +76,3 @@ class SysUserListMSchema(ma.Schema):
 
 
 
-def strfdelta(tdelta, fmt):
-    d = {"days": tdelta.days}
-    d["hours"], rem = divmod(tdelta.seconds, 3600)
-    d["minutes"], d["seconds"] = divmod(rem, 60)
-    return fmt.format(**d)

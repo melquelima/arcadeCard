@@ -11,20 +11,22 @@ from app.models.tables import LogMaquinas
 @fields_required(["tag"])
 @valida_transacao()
 def validate(fields,maquina,cli_user):
+    preco = 0
 
     if not maquina.free: #quando a maquina não esta gratis
-        if not cli_user.has_free_time:
-            cli_user.credito -= maquina.preco
-            preco = 0
+        if cli_user.has_free_time():
+            msg = f"Tempo restante: {cli_user.free_time(True)}"
         else:
             preco = maquina.preco
+            cli_user.credito -= maquina.preco
+            msg = f"Saldo atual: R${cli_user.credito:.2f}"
     else:
         preco = 0
-
+        msg = "grátis aproveite!"
 
     id_sys_user = maquina.sysUser.id
 
     log = LogMaquinas(dt.now(),id_sys_user,cli_user.id,maquina.id,preco)
     log.save()
 
-    return "OK"
+    return msg
