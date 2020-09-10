@@ -19,7 +19,7 @@ def validate(fields,maquina,cli_user):
         else:
             preco = maquina.preco
             cli_user.credito -= maquina.preco
-            msg = f"{cli_user.pessoa.nome}\nSaldo: R${cli_user.credito:.2f}"
+            msg = f"{cli_user.pessoa.nome}\nSaldo:R${cli_user.credito:.2f}"
     else:
         preco = 0
         msg = f"{cli_user.pessoa.nome}\ngratis aproveite!"
