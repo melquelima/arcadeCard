@@ -41,6 +41,7 @@ app.service('api_service', ['$q','$http',function($q,$http){
 
     this.getTemas = () => Temas("GET")
     this.postTemas = data => Temas("POST",data)
+    this.getMaquina = data => Maquinas("GET")
     this.putMaquina = data => Maquinas("PUT",data)
     this.postMaquina = data => Maquinas("POST",data)
     this.getLocadores = () => Locadores("GET")
@@ -136,17 +137,37 @@ app.service('locador_svc', ['api_service',function(api_service){
 INCLUDES = ['$scope','$filter','$http','$sce','api_service']
 TESTE = null
 
-app.controller('TodasCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce,api_service){
-    sc.lista = FROMBACKEND.lista
+app.controller('TodasCtrl', INCLUDES.concat(['tema_svc',function (sc, $filter,$http,$sce,api_service,tema_svc){
+    sc.lista = []//FROMBACKEND.lista
     sc.Selected = {ativa:false}
     sc.temas = []
     sc.locadores = []
+    sc.loadingSalvar = false
+    sc.loadingTema = false
+    sc.loadingToken = false
+
+    api_service.getMaquina().then((r)=>sc.lista = r)
 
     sc.gerarToken = ()=>{
+        sc.loadingToken = true
+
         data = {id:sc.Selected.id}
-        api_service.gerarToken(data).then((r)=>sc.token = r)
+        api_service.gerarToken(data).then((r)=>{
+            sc.loadingToken = false
+            sc.token = r
+        }).catch(()=>sc.loadingToken = false)
     }
 
+    sc.cadastraTema = (novoTema)=>{
+        sc.loadingTema = true
+        tema_svc.cadastraTema(novoTema).then((r)=>{
+            sc.loadingTema = false
+            sc.temas.push(r)
+            toastr.success('Tema Cadastrado com sucesso!');
+            sc.NovoTemaValue = ""
+            $("#modal-novoTema").modal('hide')
+        }).catch(()=>sc.loadingTema = false)
+    }
 
     sc.select = (item)=>{
         print(item)
@@ -167,8 +188,12 @@ app.controller('TodasCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce,ap
     }
 
     sc.salvarStatus = ()=>{
+        sc.loadingSalvar = true
         obj = {id:sc.Selected.id,status:sc.Selected.ativa}
-        api_service.salvarStatus(obj).then((r)=>toastr.success('Dados salvos com sucesso!'))
+        api_service.salvarStatus(obj).then((r)=>{
+            sc.loadingSalvar = false
+            toastr.success('Dados salvos com sucesso!')
+        }).catch(()=>sc.loadingSalvar = false)
     }
 
     sc.AlterarMaquina = ()=>{
@@ -196,7 +221,11 @@ app.controller('TodasCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce,ap
         console.log(typeof obj.preco)
         obj.preco = parseFloat(obj.preco);
 
-        api_service.putMaquina(obj).then((r)=>toastr.success('Dados salvos com sucesso!'))
+        sc.loadingSalvar = true
+        api_service.putMaquina(obj).then((r)=>{
+            sc.loadingSalvar = false
+            toastr.success('Dados salvos com sucesso!')
+        }).catch(()=>sc.loadingSalvar = false)
     }
 
     sc.openModal = ()=>$('#modal-novoTema').modal('show')
@@ -212,8 +241,10 @@ app.controller('TodasCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce,ap
 
 app.controller('NovaCtrl', INCLUDES.concat(['tema_svc',function (sc, $filter,$http,$sce,api_service,tema_svc){
     sc.temas = []
-    sc.novaMaquina = {nome:"",id_tema:null,id_sys_user:null,preco:null,descricao:"",ativa:false}
+    sc.novaMaquina = {nome:"",id_tema:null,id_sys_user:null,preco:null,descricao:"",ativa:false,free:false}
     sc.locadores = []
+    sc.loading = false
+    sc.loadingTema = false
 
     api_service.getTemas().then((r)=>sc.temas = r)
     api_service.getLocadores().then((r)=>{
@@ -246,20 +277,23 @@ app.controller('NovaCtrl', INCLUDES.concat(['tema_svc',function (sc, $filter,$ht
         console.log(typeof obj.preco)
         obj.preco = parseFloat(obj.preco);
 
-        
+        sc.loading = true
         api_service.postMaquina(obj).then((r)=>{
+            sc.loading = false
             toastr.success('Maquina Cadastrado com sucesso!');
-            sc.novaMaquina = {nome:"",id_tema:null,preco:null,descricao:null,ativa:false}
-        })
+            sc.novaMaquina = {nome:"",id_tema:null,preco:null,descricao:null,ativa:false,free:false}
+        }).catch(()=>sc.loading = false)
     }
 
     sc.cadastraTema = (novoTema)=>{
+        sc.loadingTema = true
         tema_svc.cadastraTema(novoTema).then((r)=>{
+            sc.loadingTema = false
             sc.temas.push(r)
             toastr.success('Tema Cadastrado com sucesso!');
             sc.NovoTemaValue = ""
             $("#modal-novoTema").modal('hide')
-        })
+        }).catch(()=>sc.loadingTema = false)
     }
 
 }]));
@@ -394,7 +428,8 @@ app.controller('UsuariosCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce
 app.controller('NovoUsuarioCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce,api_service){
     sc.documentos = []
     sc.Usuario = {nome:null,telefone:null,email:null,numero_cartao:null,id_doc_type:null,numero_documento:null,ativo:false}
-    
+    sc.loading = false
+
     api_service.getDocs().then((r)=>sc.documentos = r)
 
     sc.cadastraUsuario = ()=>{
@@ -411,9 +446,12 @@ app.controller('NovoUsuarioCtrl', INCLUDES.concat([function (sc, $filter,$http,$
         }
         obj.id_doc_type = obj.id_doc_type.id
 
+        sc.loading = true
         api_service.postUsuarios(obj).then((r)=>{
+            sc.loading = false
+            sc.Usuario = {nome:null,telefone:null,email:null,numero_cartao:null,id_doc_type:null,numero_documento:null,ativo:false}
             toastr.success('Usuario cadastrado com sucesso!');
-        })
+        }).catch(()=>sc.loading = false)
     }
 
 }]));
@@ -422,21 +460,30 @@ app.controller('CarregarCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce
     sc.usuarios = []
     sc.valor = null
     sc.selected = null
+    sc.loading = false
+    sc.free = null
 
     api_service.getUsuarios().then((r)=>sc.usuarios = r)
 
 
     sc.carregar = ()=>{
 
-        if(!sc.valor){
+        if(!(sc.valor || sc.free)){
             return toastr.error("valor inválido");
         }
 
+        sc.valor += 0 //transforma null em 0
+        sc.free += 0 //transforma null em 0
+        console.log(sc.free)
+
+        sc.loading = true //logo carregando e desabilita o botao
         data={id_user:sc.selected.id,credito:sc.valor,free_play_days:sc.free}
+        console.log(data)
         api_service.creditUsuarios(data).then((r)=>{
             toastr.success(r);
             sc.selected.credito += sc.valor
-        })
+            sc.loading = false //logo carregando e habilita o botao
+        }).catch(()=>sc.loading = false)
     }
 
     sc.$watch('documento', function(newValue, oldValue) {

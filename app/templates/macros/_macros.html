@@ -68,24 +68,52 @@
 {% endmacro %}
 
 
-{% macro button(valor,ng_click,style) %}
+{% macro button(valor,ng_click,style,ng_loading="") %}
 <div class="container-login100-form-btn" style="{{style}}">
     <div class="wrap-login100-form-btn">
       <div class="login100-form-bgbtn"></div>
-      <button class="login100-form-btn" ng-click="{{ ng_click }}">
-        {{ valor }}
+      <button class="login100-form-btn" ng-click="{{ ng_click }}"
+        {{ tagProp("ng-disabled",ng_loading) }}
+      >
+
+        {% if ng_loading %}
+          <div ng-hide={{ng_loading}}>{{valor}}</div>
+          <div class="d-flex justify-content-center" style="margin: 10px;"
+          {{ tagProp("ng-show",ng_loading) }}
+          >
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+        {% else %}
+          {{valor}}
+        {% endif %}
       </button>
     </div>
 </div>
 {% endmacro %}
 
 
-{% macro buttonSquare(valor,ng_click,style) %}
+{% macro buttonSquare(valor,ng_click,style,ng_loading="") %}
 <div class="container-login100-form-btn" style="{{style}}">
   <div class="wrap-login100-form-btn" style="border-radius: 5px;">
     <div class="login100-form-bgbtn"></div>
-    <button class="login100-form-btn" style="height: 35px;" ng-click="{{ ng_click }}">
-      {{ valor }}
+    <button class="login100-form-btn" style="height: 35px;" ng-click="{{ ng_click }}"
+    {{ tagProp("ng-disabled",ng_loading) }}
+    >
+      {% if ng_loading %}
+        <div ng-hide={{ng_loading}}>{{valor}}</div>
+        <div class="d-flex justify-content-center" style="margin: 10px;"
+        {{ tagProp("ng-show",ng_loading) }}
+        >
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      {% else %}
+        {{valor}}
+      {% endif %}
+
     </button>
   </div>
 </div>

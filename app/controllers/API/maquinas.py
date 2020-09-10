@@ -90,9 +90,9 @@ def updateToken(fields):
 @login_required
 def Logmaquinas():
     if current_user.is_admin: #se for admin mostra todos os Logs se nao, mostra apenas os logs do usuario
-        logs = LogMaquinas.query.all()
+        logs = LogMaquinas.query.order_by(LogMaquinas.data.desc()).all()
     else:
-        logs = LogMaquinas.query.filter(LogMaquinas.cli_user.has(id_sys_user=current_user.id)).all()
+        logs = LogMaquinas.query.filter(LogMaquinas.cli_user.has(id_sys_user=current_user.id)).order_by(LogMaquinas.data.desc()).all()
         # logs = LogMaquinas.query.filter(LogMaquinas.sysUser.has(id=current_user.id)).all()
 
     formatado = mallowList(LogMSchema,logs)

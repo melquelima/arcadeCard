@@ -45,13 +45,10 @@
         <div class="card-body table-responsive p-0">
           <div class="col-12" ng-cloak>
             <div class="row ctn">
-              <div class="col-sm-12" style="max-width: 500px;margin: auto;">
+              <div class="col-sm-12" style="max-width: 500px;margin: auto;" ng-show="usuarios.length">
                 <div class="row">
                   {{fields.textField(12,"Documento","numero do documento","documento")}}
                 </div>
-          <!-- <div class="row">
-                  {{fields.textField(12,"","R$0,00","asd","valor")}}
-                </div> -->
                 
                 <div class="row">
                   <div class="card card-primary card-outline col-sm-12" style="height:100%">
@@ -83,7 +80,8 @@
                               {{fields.numberField(6,"Valor","R$0,00","valor",label_style="color:black")}}
                               {{fields.numberField(6,"Free","0","free",label_style="color:black")}}
                            </div>
-                           {{fields.buttonSquare("CARREGAR","carregar()","margin-top:20px") }}
+                           {{fields.buttonSquare("CARREGAR","carregar()","margin-top:20px","loading") }}
+                           <!-- {{fields.buttonSquare("CARREGAR","loading = !loading","margin-top:20px","loading") }} -->
                         </div>
                      </div>
                      <!-- /.card-body -->

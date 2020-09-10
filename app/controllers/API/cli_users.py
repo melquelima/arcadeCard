@@ -83,10 +83,15 @@ def usuarios_put(fields):
 @login_required
 @fields_required({"id_user":int,"credito":float,"free_play_days":int})
 def usuarios_credit(fields):
+    not_negative = lambda x: 0 if x <=0 else x
+    fields["credito"] = not_negative(fields["credito"])
+    fields["free_play_days"] = not_negative(fields["free_play_days"])
+
     #valid = validate(fields["freeplay_data_exp"],"%d/%m/%y %H:%M")
     #if (not valid[0]) and fields["freeplay_data_exp"] != "": return "o campo freeplay_data_exp contem um formato inválido",400
     #fields["freeplay_data_exp"] = valid[1] if valid[0] else None
-    if fields["credito"] <= 0: return "valor inválido!",400
+    if not fields["credito"] and not fields["free_play_days"]: return "valor inválido!",400
+
 
     cli_user = CliUsers.query.get(fields["id_user"])
     if cli_user:

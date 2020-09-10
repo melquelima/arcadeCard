@@ -62,7 +62,15 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
-          <table class="table table-hover text-nowrap">
+
+          <div class="d-flex justify-content-center" style="margin: 10px;" ng-hide="usuarios.length">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+
+
+          <table class="table table-hover text-nowrap" ng-show="usuarios.length" ng-cloak>
             <thead>
               <tr>
                 <th>locador</th>
@@ -120,7 +128,7 @@
             <hr>
             <div class="row">
               {{fields.numberField(4,"Credito","R$0,00",ng_model="Selected.credito",disabled=True)}}
-              {{fields.textField(4,"Jogo Livre Data","01/01/2020","Selected.freeplay_data_exp","date")}}
+              {{fields.textField(4,"Jogo Livre","01/01/2020","Selected.free_time","date",disabled=True)}}
               {{fields.checkField(4,"Ativo","ATIVO","INATIVO","Selected.ativo")}}
             </div>
 
