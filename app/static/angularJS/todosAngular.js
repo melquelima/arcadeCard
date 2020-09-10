@@ -70,6 +70,12 @@ app.service('api_service', ['$q','$http',function($q,$http){
         parameters = {url: "/api/documentos",method: "GET"}
         return $http(parameters).then(success,error)
     }
+    this.getLogsFiltered = function(data){
+        parameters = {url: "/api/logMaquinasFilter",method: "POST",data:data}
+        return $http(parameters).then(success,error)
+    }
+
+    
     
 
     success = (response)=> response.data
@@ -300,8 +306,30 @@ app.controller('NovaCtrl', INCLUDES.concat(['tema_svc',function (sc, $filter,$ht
 
 app.controller('LogsCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce,api_service){
     sc.logs = []
+    sc.locadores = []
+    sc.selectedLocador = null
+    sc.loading = false
+    sc.selectedData = null
+    sc.selectedData = getDate()
 
-    api_service.getLogs().then((r)=>sc.logs = r)
+    //api_service.getLogs().then((r)=>sc.logs = r)
+    api_service.getLocadores().then((r)=>sc.locadores = r)
+
+    sc.filterLogs = ()=>{
+        data = {
+            data:sc.selectedData == null?"": sc.selectedData,
+            id_locador:sc.selectedLocador ==null?0:sc.selectedLocador.id,
+            documento_cli:sc.selectedDocumento ==null?"":sc.selectedDocumento,
+        }
+        sc.loading = true
+        api_service.getLogsFiltered(data).then((r)=>{
+            sc.logs = r
+            sc.loading = false
+        }).catch(()=>sc.loading = false)
+        
+        
+    }
+
 
 }]));
 
@@ -478,7 +506,6 @@ app.controller('CarregarCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce
 
         sc.loading = true //logo carregando e desabilita o botao
         data={id_user:sc.selected.id,credito:sc.valor,free_play_days:sc.free}
-        console.log(data)
         api_service.creditUsuarios(data).then((r)=>{
             toastr.success(r);
             sc.selected.credito += sc.valor
@@ -537,3 +564,14 @@ function removeItemArrray(arr, value) {
     }
 
 print = (x)=>console.log(x)
+
+
+function getDate(){
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = dd + '/' + mm + '/' + yyyy;
+    return today
+}

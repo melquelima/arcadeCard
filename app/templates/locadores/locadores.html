@@ -52,7 +52,7 @@
 
           <div class="card-tools">
             <div class="input-group input-group-sm" style="width: 150px;">
-              <input type="text" name="table_search" class="form-control float-right" placeholder="Pesquisar">
+              <input type="text" name="table_search" class="form-control float-right" placeholder="Pesquisar" ng-model="search">
 
               <div class="input-group-append">
                 <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
@@ -62,7 +62,11 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
-          <table class="table table-hover text-nowrap">
+
+
+          {{ fields.loading("locadores.length") }}
+
+          <table class="table table-hover text-nowrap" ng-show="locadores.length">
             <thead>
               <tr>
                 <th>Nome</th>
@@ -75,7 +79,7 @@
               </tr>
             </thead>
             <tbody ng-cloak>
-              <tr ng-repeat="x in locadores">
+              <tr ng-repeat="x in locadores | filter: search">
                 <td>[{x.pessoa.nome}]</td>
                 <td>[{x.local}]</td>
                 <td>[{x.maquinas.length}]</td>

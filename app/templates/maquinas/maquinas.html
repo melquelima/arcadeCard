@@ -52,7 +52,7 @@
 
           <div class="card-tools">
             <div class="input-group input-group-sm" style="width: 150px;">
-              <input type="text" name="table_search" class="form-control float-right" placeholder="Pesquisar">
+              <input type="text" name="table_search" class="form-control float-right" placeholder="Pesquisar" ng-model="search">
 
               <div class="input-group-append">
                 <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
@@ -82,7 +82,7 @@
               </tr>
             </thead>
             <tbody ng-cloak>
-              <tr ng-repeat="x in lista">
+              <tr ng-repeat="x in lista | filter : search">
                 <td>[{x.sysUser.local}]</td>
                 <td>[{x.Tema.tema}]</td>
                 <td>[{x.nome}]</td>  

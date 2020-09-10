@@ -10,9 +10,12 @@ import json
 
 @app.route("/api/locador",methods=["GET"])
 @login_required
-@admin_required()
 def locador_get():
-    sysusers = SysUser.query.all()
+    if current_user.is_admin:
+        sysusers = SysUser.query.all()
+    else:
+        sysusers = [current_user]
+        
     formatado = mallowList(SysUserSchema,sysusers)
     return jsonify(formatado)
 

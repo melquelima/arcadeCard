@@ -90,7 +90,7 @@ def mallowList(schema,lista):#coverte dados da api para formtado jdson
 def validate(date_text,formt): #valida formato de data
     try:
         dt.strptime(date_text, formt)
-        return True,dt.strftime(formt,date_text)
+        return True,dt.strptime(date_text,formt)
     except ValueError:
         return  False,""
 

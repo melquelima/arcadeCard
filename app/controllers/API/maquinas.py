@@ -6,6 +6,8 @@ from app.models.tables import Maquinas,Temas,SysUser,LogMaquinas
 from app.models.marshmallow import MaquinasSchema,LogMSchema
 from secrets import token_urlsafe
 from werkzeug.security import generate_password_hash as GPH
+from datetime import date,datetime as dt
+from sqlalchemy import or_
 import json
 import jwt
 
@@ -86,14 +88,50 @@ def updateToken(fields):
     else:
         return "Maquina não existente!",400
 
+
 @app.route("/api/logMaquinas",methods=["GET"])
 @login_required
 def Logmaquinas():
     if current_user.is_admin: #se for admin mostra todos os Logs se nao, mostra apenas os logs do usuario
-        logs = LogMaquinas.query.order_by(LogMaquinas.data.desc()).all()
+        logs = LogMaquinas.query.order_by(LogMaquinas.data.desc()).limit(30)
     else:
         logs = LogMaquinas.query.filter(LogMaquinas.cli_user.has(id_sys_user=current_user.id)).order_by(LogMaquinas.data.desc()).all()
         # logs = LogMaquinas.query.filter(LogMaquinas.sysUser.has(id=current_user.id)).all()
+
+    formatado = mallowList(LogMSchema,logs)
+    return jsonify(formatado)
+
+
+@app.route("/api/logMaquinasFilter",methods=["POST"])
+@fields_required({"data":str,"id_locador":int,"documento_cli":str})
+#@login_required
+def LogmaquinasFitlered(fields):
+    current_user = SysUser.query.get(2)
+
+    valid = validate(fields["data"],"%d/%m/%Y")
+    if (not valid[0]) and fields["data"] != "": return "o campo data contem um formato inválido",400
+    fields["data"] = valid[1] if valid[0] else None
+
+
+    if current_user.is_admin: #se for admin mostra todos os Logs se nao, mostra apenas os logs do usuario
+        logs = LogMaquinas.query                                                                                            \
+        .filter(                                                                                                            \
+            or_(cast(LogMaquinas.data,Date) == fields["data"],not fields["data"]),                                          \
+            or_(LogMaquinas.id_sys_user == fields["id_locador"],not fields["id_locador"])                                  \
+            
+        )                                                                                                                 \
+        .join(CliUsers, LogMaquinas.cli_user) \
+        .filter(
+            or_(CliUsers.pessoa.has(numero_documento = fields["documento_cli"]),not fields["documento_cli"])
+        )\
+        .limit(1000).all()
+
+        print(len(logs))
+
+        #.order_by(LogMaquinas.data.desc())                  \
+    else:
+        logs = LogMaquinas.query.filter(LogMaquinas.cli_user.has(id_sys_user=current_user.id)).order_by(LogMaquinas.data.desc()).all()
+      
 
     formatado = mallowList(LogMSchema,logs)
     return jsonify(formatado)

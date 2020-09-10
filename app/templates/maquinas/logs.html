@@ -52,7 +52,7 @@
 
           <div class="card-tools">
             <div class="input-group input-group-sm" style="width: 150px;">
-              <input type="text" name="table_search" class="form-control float-right" placeholder="Pesquisar">
+              <input type="text" name="table_search" class="form-control float-right" placeholder="Pesquisar" ng-model="search">
 
               <div class="input-group-append">
                 <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
@@ -61,12 +61,21 @@
           </div>
         </div>
         <!-- /.card-header -->
-        <div class="card-body table-responsive p-0">
+        <div class="card-body table-responsive p-0" ng-cloak>
           
-          <div class="d-flex justify-content-center" style="margin: 10px;" ng-hide="logs.length">
-            <div class="spinner-border" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
+          <div class="card-body" ng-show="logs.length || true">
+              <div class="row">
+                {{fields.textField(3,"Data","01/01/2020","selectedData",id="date")}}
+                {{fields.selectField(3,"Locador","Selecione um locador","x.local for x in locadores","selectedLocador")}}
+                {{fields.textField(3,"Documento","documento do cliente","selectedDocumento")}}
+                
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label>&nbsp</label>
+                      {{fields.buttonSquare("Pesquisar","filterLogs()","",ng_loading="loading")}}
+                  </div>
+                </div>
+              </div>
           </div>
 
           <table class="table table-hover text-nowrap" ng-show="logs.length">
@@ -80,7 +89,7 @@
               </tr>
             </thead>
             <tbody ng-cloak>
-              <tr ng-repeat="x in logs">
+              <tr ng-repeat="x in logs | filter : search">
                 <td>[{ x.data }]</td>
                 <td>[{ x.maquina.sysUser.local }]</td>
                 <td>[{ x.cli_user.pessoa.nome }]</td>
