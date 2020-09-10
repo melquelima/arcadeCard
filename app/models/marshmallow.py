@@ -34,7 +34,7 @@ class CliUserSchema(ma.Schema):
     credito             = fields.Float()    
     ativo               = fields.Boolean()    
     freeplay_data_exp   = fields.DateTime()
-    free_time           = fields.Function(lambda obj:strfdelta(obj.free_time(),"{hours}:{minutes}"))
+    free_time           = fields.Function(lambda obj:obj.free_time(True))
     pessoa              = fields.Nested(PessoaSchema)
     sysUser             = fields.Nested(SysUserSchema)
 

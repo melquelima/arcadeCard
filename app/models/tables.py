@@ -126,7 +126,7 @@ class CliUsers(db.Model):
     def free_time(self,formated=False):
         tm = timedelta() if not self.freeplay_data_exp else self.freeplay_data_exp - datetime.now()
         tm = timedelta() if tm.total_seconds() <= 0 else tm
-        return tm if not formated else strfdelta(tm,"{hours}:{minutes}")
+        return tm if not formated else strfdelta(tm,"{days}d {hours}:{minutes}")
 
     def has_free_time(self):
         return self.free_time().total_seconds() > 0
