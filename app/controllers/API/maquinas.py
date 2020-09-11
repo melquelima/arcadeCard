@@ -11,11 +11,22 @@ from sqlalchemy import or_
 import json
 import jwt
 
+@app.route("/api/maquinas/<int:id>")
 @app.route("/api/maquinas",methods=["GET"])
-@admin_required()
-def Maquinas_fnc():
-    cliUsr = Maquinas.query.all()
-    formatado = mallowList(MaquinasSchema,cliUsr)
+@login_required
+def Maquinas_fnc(id=None):
+    if not id is None:
+        if current_user.is_admin:
+            itens = Maquinas.query.filter(Maquinas.sysUser.has(id=id)).all()
+        else:
+            itens = []
+    else:
+        if current_user.is_admin: #se for admin mostra todos os Logs se nao, mostra apenas os logs do usuario
+            itens = Maquinas.query.all()
+        else:
+            itens = Maquinas.query.filter(Maquinas.sysUser.has(id=current_user.id)).all()
+
+    formatado = mallowList(MaquinasSchema,itens)
     return jsonify(formatado)
 
 
@@ -118,13 +129,11 @@ def LogmaquinasFitlered(fields):
         .filter(                                                                                                            \
             or_(cast(LogMaquinas.data,Date) == fields["data"],not fields["data"]),                                          \
             or_(LogMaquinas.id_sys_user == fields["id_locador"],not fields["id_locador"])                                  \
-            
         )                                                                                                                 \
         .join(CliUsers, LogMaquinas.cli_user) \
         .filter(
             or_(CliUsers.pessoa.has(numero_documento = fields["documento_cli"]),not fields["documento_cli"])
-        )\
-        .limit(1000).all()
+        ).all()
 
         print(len(logs))
 

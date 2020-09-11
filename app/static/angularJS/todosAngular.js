@@ -41,7 +41,7 @@ app.service('api_service', ['$q','$http',function($q,$http){
 
     this.getTemas = () => Temas("GET")
     this.postTemas = data => Temas("POST",data)
-    this.getMaquina = data => Maquinas("GET")
+    this.getMaquina = () => Maquinas("GET")
     this.putMaquina = data => Maquinas("PUT",data)
     this.postMaquina = data => Maquinas("POST",data)
     this.getLocadores = () => Locadores("GET")
@@ -74,6 +74,13 @@ app.service('api_service', ['$q','$http',function($q,$http){
         parameters = {url: "/api/logMaquinasFilter",method: "POST",data:data}
         return $http(parameters).then(success,error)
     }
+    this.getMaquinaId = function(data){
+        data = data==null?"": "/" + data
+        parameters = {url: "/api/maquinas"+data,method: "GET"}
+        return $http(parameters).then(success,error)
+    }
+
+    
 
     
     
@@ -144,6 +151,7 @@ INCLUDES = ['$scope','$filter','$http','$sce','api_service']
 TESTE = null
 
 app.controller('TodasCtrl', INCLUDES.concat(['tema_svc',function (sc, $filter,$http,$sce,api_service,tema_svc){
+    sc.idLista = FROMBACKEND.id
     sc.lista = []//FROMBACKEND.lista
     sc.Selected = {ativa:false}
     sc.temas = []
@@ -151,8 +159,9 @@ app.controller('TodasCtrl', INCLUDES.concat(['tema_svc',function (sc, $filter,$h
     sc.loadingSalvar = false
     sc.loadingTema = false
     sc.loadingToken = false
+    
 
-    api_service.getMaquina().then((r)=>sc.lista = r)
+    api_service.getMaquinaId(sc.idLista).then((r)=>sc.lista = r)
 
     sc.gerarToken = ()=>{
         sc.loadingToken = true
