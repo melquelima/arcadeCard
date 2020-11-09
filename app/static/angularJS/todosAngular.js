@@ -519,6 +519,7 @@ app.controller('CarregarCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce
             toastr.success(r);
             sc.selected.credito += sc.valor
             sc.loading = false //logo carregando e habilita o botao
+            sc.selected = null
         }).catch(()=>sc.loading = false)
     }
 

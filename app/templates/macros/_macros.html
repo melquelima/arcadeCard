@@ -14,8 +14,8 @@
 </div>
 {% endmacro %}
 
-{% macro loading(ng_hide) %}
-<div class="d-flex justify-content-center" style="margin: 10px;" 
+{% macro loading(ng_hide,style="") %}
+<div class="d-flex justify-content-center" style="margin: 10px;{{ style }}" 
 {{ tagProp("ng-hide",ng_hide) }}
 >
   <div class="spinner-border" role="status">

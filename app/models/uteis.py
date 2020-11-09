@@ -119,7 +119,7 @@ def token_required(ignore=False): #deixa passar quando tiver * no banco
                 return function(*args, **kwargs)
                 #current_user = User.query.filter_by(publicId=data['publicId']).first()
             except:
-                return "Token inválido!",400
+                return "Token invalido!",400
            
         return wrapper
     return decorator

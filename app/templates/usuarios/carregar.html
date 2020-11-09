@@ -45,12 +45,14 @@
         <div class="card-body table-responsive p-0">
           <div class="col-12" ng-cloak>
             <div class="row ctn">
-              <div class="col-sm-12" style="max-width: 500px;margin: auto;" ng-show="usuarios.length">
-                <div class="row">
+              <div class="col-sm-12" style="max-width: 500px;margin: auto;">
+                {{fields.loading("usuarios.length","color:white")}}
+
+                <div class="row" ng-show="usuarios.length">
                   {{fields.textField(12,"Documento","numero do documento","documento")}}
                 </div>
                 
-                <div class="row">
+                <div class="row" ng-show="usuarios.length">
                   <div class="card card-primary card-outline col-sm-12" style="height:100%">
                      <div class="card-body box-profile">
                         <div class="text-center" style="    transition: 0.2s linear all;">
