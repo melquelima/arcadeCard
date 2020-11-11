@@ -157,7 +157,7 @@ def valida_transacao():
                                     kwargs["cli_user"]  = cliUsr 
                                     return function(*args, **kwargs)
                                 else:
-                                    return "Saldo Insuficiente",400
+                                    return "Sem Saldo!",400
                             else:
                                 return "Locador inativo!",400
                         else:
