@@ -163,7 +163,7 @@ def valida_transacao():
                         else:
                             return "Usuario inativo!",400
                     else:
-                        return "Usuario nao encontrado!",400
+                        return "Usuario invalido",400
                 else:
                     return "Maquina inativa!",400
             else:
