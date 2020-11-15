@@ -4,21 +4,39 @@ from flask_login import current_user,login_required
 from app.models.uteis import *
 from app.models.tables import CliUsers,Pessoa,LogVendas
 from app.models.marshmallow import CliUserSchema
-from sqlalchemy import or_
+from sqlalchemy import or_,and_
 from datetime import datetime as dt, timedelta as td
 import json
 
 
-@app.route("/api/usuarios",methods=["GET"])
+
+@app.route("/api/usuarios/<int:id_locador>/<int:id_user>")
+@app.route("/api/usuarios/*/<int:id_user>")
+@app.route("/api/usuarios/<int:id_locador>") # retorna os clientes de um locador
+@app.route("/api/usuarios",methods=["GET"]) #retorna todos os usuarios
 @login_required
-def usuarios_get():
-    if current_user.is_admin:
-        users = CliUsers.query.all()
-    else:
-        users = CliUsers.query.filter_by(id_sys_user = current_user.id).all()
+def usuarios_get(id_locador=None,id_user=None):
+    temFiltroLocador = not id_locador is None
+    temFiltroUsuario = not id_user is None
+    filterCli = CliUsers.query.filter_by
     
-    formated = mallowList(CliUserSchema,users)
-    return jsonify(formated)
+    if temFiltroLocador:
+        if not temFiltroUsuario:
+            users = filterCli(id_sys_user = id_locador).all() #retorna todos os usuarios do locador
+        else:
+            users = filterCli(id_sys_user = id_locador,id=id_user).all() #retorna o usuarios do locador
+    else:
+        if not temFiltroUsuario:
+            users = CliUsers.query.all() #retorna todos os usuarios
+        else:
+            users = filterCli(id=id_user).all() #retorna o usuarios do locador
+
+    if not current_user.is_admin:
+        if any([x.id_sys_user != current_user.id for x in users]) or id_locador != current_user.id:
+            return "permissão negada!",400
+
+    formatado = mallowList(CliUserSchema,users)
+    return jsonify(formatado)
 
 
 @app.route("/api/usuarios",methods=["POST"])

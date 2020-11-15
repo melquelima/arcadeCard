@@ -64,11 +64,12 @@
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
 
-          {{fields.loading("lista.length")}}
+          {{fields.loading(ng_show = "loading")}}
+          {{fields.empty(ng_show="!lista.length && !loading")}}  
 
          
 
-          <table class="table table-hover text-nowrap" ng-show="lista.length">
+          <table class="table table-hover text-nowrap ng-cloak" ng-show="lista.length">
             <thead>
               <tr>
                 <th>Local</th>

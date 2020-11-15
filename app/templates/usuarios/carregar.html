@@ -46,7 +46,7 @@
           <div class="col-12" ng-cloak>
             <div class="row ctn">
               <div class="col-sm-12" style="max-width: 500px;margin: auto;">
-                {{fields.loading("usuarios.length","color:white")}}
+                {{fields.loading(ng_show = "loading",style="color:white")}}
 
                 <div class="row" ng-show="usuarios.length">
                   {{fields.textField(12,"Documento","numero do documento","documento")}}
@@ -82,7 +82,7 @@
                               {{fields.numberField(6,"Valor","R$0,00","valor",label_style="color:black")}}
                               {{fields.numberField(6,"Free","0","free",label_style="color:black")}}
                            </div>
-                           {{fields.buttonSquare("CARREGAR","carregar()","margin-top:20px","loading") }}
+                           {{fields.buttonSquare("CARREGAR","carregar()","margin-top:20px","loadingButton") }}
                            <!-- {{fields.buttonSquare("CARREGAR","loading = !loading","margin-top:20px","loading") }} -->
                         </div>
                      </div>

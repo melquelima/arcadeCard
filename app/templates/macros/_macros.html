@@ -14,9 +14,10 @@
 </div>
 {% endmacro %}
 
-{% macro loading(ng_hide,style="") %}
-<div class="d-flex justify-content-center" style="margin: 10px;{{ style }}" 
+{% macro loading(ng_show="", ng_hide="",style="") %}
+<div class="d-flex justify-content-center ng-cloak" style="margin: 10px;{{ style }}" 
 {{ tagProp("ng-hide",ng_hide) }}
+{{ tagProp("ng-show",ng_show) }}
 >
   <div class="spinner-border" role="status">
     <span class="sr-only">Loading...</span>
@@ -24,6 +25,15 @@
 </div>
 {% endmacro %}
 
+
+{% macro empty(ng_show="", ng_hide="",style="") %}
+<div class="d-flex justify-content-center ng-cloak" style="margin: 10px;{{ style }}" 
+{{ tagProp("ng-hide",ng_hide) }}
+{{ tagProp("ng-show",ng_show) }}
+>
+Sem registros
+</div>
+{% endmacro %}
 
 
 

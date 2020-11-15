@@ -65,7 +65,8 @@
         <div class="card-body table-responsive p-0">
 
 
-          {{ fields.loading("locadores.length") }}
+          {{fields.loading(ng_show="loading")}}
+          {{fields.empty(ng_show="!locadores.length && !loading")}}
 
           <table class="table table-hover text-nowrap" ng-show="locadores.length">
             <thead>

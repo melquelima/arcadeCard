@@ -7,26 +7,37 @@ from app.models.marshmallow import MaquinasSchema,LogMSchema
 from secrets import token_urlsafe
 from werkzeug.security import generate_password_hash as GPH
 from datetime import date,datetime as dt
-from sqlalchemy import or_
+from sqlalchemy import or_,and_
 import json
 import jwt
 
-@app.route("/api/maquinas/<int:id>")
+@app.route("/api/maquinas/<int:id_locador>/<int:id_maquina>")
+@app.route("/api/maquinas/*/<int:id_maquina>")
+@app.route("/api/maquinas/<int:id_locador>")
 @app.route("/api/maquinas",methods=["GET"])
-@login_required
-def Maquinas_fnc(id=None):
-    if not id is None:
-        if current_user.is_admin:
-            itens = Maquinas.query.filter(Maquinas.sysUser.has(id=id)).all()
-        else:
-            itens = []
-    else:
-        if current_user.is_admin: #se for admin mostra todos os Logs se nao, mostra apenas os logs do usuario
-            itens = Maquinas.query.all()
-        else:
-            itens = Maquinas.query.filter(Maquinas.sysUser.has(id=current_user.id)).all()
 
-    formatado = mallowList(MaquinasSchema,itens)
+@login_required
+def Maquinas_fnc(id_locador=None,id_maquina=None):
+    temFiltroLocador = not id_locador is None
+    temFiltroMaquina = not id_maquina is None
+    filterMaq = Maquinas.query.filter_by
+
+    if temFiltroLocador:
+        if not temFiltroMaquina:
+            maquinas = Maquinas.query.filter(Maquinas.sysUser.has(id=id_locador)).all()
+        else:
+            maquinas = Maquinas.query.filter(and_(Maquinas.sysUser.has(id=id_locador),Maquinas.id == id_maquina)).all()
+    else:
+        if not temFiltroMaquina:
+            maquinas = Maquinas.query.all()
+        else:
+            maquinas = filterMaq(id = id_maquina).all()
+
+    if not current_user.is_admin:
+        if any([x.id_sys_user != current_user.id for x in maquinas]) or id_locador != current_user.id:
+            return "permissão negada!",400
+
+    formatado = mallowList(MaquinasSchema,maquinas)
     return jsonify(formatado)
 
 
@@ -117,7 +128,7 @@ def Logmaquinas():
 @fields_required({"data":str,"id_locador":int,"documento_cli":str})
 #@login_required
 def LogmaquinasFitlered(fields):
-    current_user = SysUser.query.get(2)
+    #current_user = SysUser.query.get(2)
 
     valid = validate(fields["data"],"%d/%m/%Y")
     if (not valid[0]) and fields["data"] != "": return "o campo data contem um formato inválido",400

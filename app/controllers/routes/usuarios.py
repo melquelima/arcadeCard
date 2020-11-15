@@ -10,9 +10,18 @@ def new_user():
 
 
 @app.route("/usuarios")
+@app.route("/usuarios/<int:id_locador>")
+@app.route("/usuarios/<int:id_locador>/<int:id_user>")
+@app.route("/usuarios/*/<int:id_user>")
 @login_required
-def users():
-    return render_template("usuarios/usuarios.html",title="Usuarios",OBJ=[])
+def users(id_locador=None,id_user=None):
+    data = {
+        "id_locador":id_locador,
+        "id_user":id_user,
+        "admin":current_user.is_admin,
+        "id_usuarioAtual":current_user.id
+        }
+    return render_template("usuarios/usuarios.html",title="Usuarios",OBJ=data)
 
 
 @app.route("/carregar")

@@ -21,10 +21,15 @@ def locador_get():
 
 #com lista de maquinas
 @app.route("/api/locador",methods=["FILTER"])
+@app.route("/api/locador/<int:id_locador>",methods=["FILTER"])
 @login_required
 @admin_required()
-def locador_get2():
-    sysusers = SysUser.query.all()
+def locador_get2(id_locador = None):
+    if id_locador != None:
+        sysusers = SysUser.query.filter_by(id = id_locador).all()
+    else:
+        sysusers = SysUser.query.all()
+        
     formatado = mallowList(SysUserListMSchema,sysusers)
     return jsonify(formatado)
 

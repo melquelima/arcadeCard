@@ -12,10 +12,12 @@ def novoLocador():
     return render_template("locadores/novoLocador.html",title="Novo Locador",OBJ=[])
 
 @app.route("/Locadores")
+@app.route("/Locadores/<int:id_locador>")
 @login_required
 @admin_required_route()
-def Locadores():
-    return render_template("locadores/locadores.html",title="Locadores",OBJ=[])
+def Locadores(id_locador = None):
+    data = {"id_locador":id_locador}
+    return render_template("locadores/locadores.html",title="Locadores",OBJ=data)
 
 
 

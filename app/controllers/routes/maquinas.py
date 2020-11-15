@@ -13,23 +13,15 @@ def nova():
     return render_template("maquinas/novaMaquina.html",title="Nova Máquina",OBJ=[])
 
 
-@app.route("/maquinas")
-@app.route("/maquinas/<int:id>")
-@login_required
-def maquinas(id=None):
-    # if not id is None:
-    #     if current_user.is_admin:
-    #         itens = Maquinas.query.filter(Maquinas.sysUser.has(id=id)).all()
-    #     else:
-    #         itens = []
-    # else:
-    #     if current_user.is_admin: #se for admin mostra todos os Logs se nao, mostra apenas os logs do usuario
-    #         itens = Maquinas.query.all()
-    #     else:
-    #         itens = Maquinas.query.filter(Maquinas.sysUser.has(id=current_user.id)).all()
 
-    #itens = mallowList(MaquinasSchema,itens)
-    data = {"id":id,"admin":current_user.is_admin}
+@app.route("/maquinas/<int:id_locador>/<int:id_maquina>")
+@app.route("/maquinas/*/<int:id_maquina>")
+@app.route("/maquinas/<int:id_locador>")
+@app.route("/maquinas")
+
+@login_required
+def maquinas(id_locador=None,id_maquina=None):
+    data = {"id_locador":id_locador,"id_maquina":id_maquina,"id_usuarioAtual":current_user.id,"admin":current_user.is_admin}
     return render_template("maquinas/maquinas.html",title="Máquinas",OBJ=data)
 
 

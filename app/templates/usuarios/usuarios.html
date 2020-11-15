@@ -64,7 +64,8 @@
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
 
-          {{fields.loading("usuarios.length")}}
+          {{fields.loading(ng_show="loading")}}
+          {{fields.empty(ng_show="!usuarios.length && !loading")}}   
 
 
           <table class="table table-hover text-nowrap" ng-show="usuarios.length" ng-cloak>

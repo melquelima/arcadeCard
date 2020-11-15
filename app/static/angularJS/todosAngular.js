@@ -45,10 +45,10 @@ app.service('api_service', ['$q','$http',function($q,$http){
     this.putMaquina = data => Maquinas("PUT",data)
     this.postMaquina = data => Maquinas("POST",data)
     this.getLocadores = () => Locadores("GET")
+    this.getLocadores2 = () => Locadores("FILTER")
     this.postLocadores = data => Locadores("POST",data)
     this.putLocadores = data => Locadores("PUT",data)
-    this.getLocadores2 = () => Locadores("FILTER")
-    this.getUsuarios = () => Usuarios("GET")
+    this.getUsuarios2 = () => Usuarios("GET")
     this.postUsuarios = data => Usuarios("POST",data)
     this.putUsuarios = data => Usuarios("PUT",data)
     this.creditUsuarios = data => Usuarios("CREDIT",data)
@@ -74,17 +74,39 @@ app.service('api_service', ['$q','$http',function($q,$http){
         parameters = {url: "/api/logMaquinasFilter",method: "POST",data:data}
         return $http(parameters).then(success,error)
     }
-    this.getMaquinaId = function(data){
-        data = data==null?"": "/" + data
-        parameters = {url: "/api/maquinas"+data,method: "GET"}
+    this.getUsuarios = function(obj){
+        id_locador = obj.id_locador==null?(obj.id_user==null?"":"/*"): "/" + obj.id_locador
+        id_user = obj.id_user==null?"": "/" + obj.id_user
+
+        if (obj.id_user + obj.id_locador == "" && !obj.admin){
+            id_locador = "/" + obj.id_usuarioAtual
+        }
+
+        parameters = {url: "/api/usuarios"+id_locador + id_user,method: "GET"}
+        return $http(parameters).then(success,error)
+    }
+
+    this.getLocadores2 = function(obj){
+        id_locador = obj.id_locador==null?"": "/" + obj.id_locador
+        parameters = {url: "/api/locador"+id_locador,method: "FILTER"}
+        return $http(parameters).then(success,error)
+    }
+
+
+
+    this.getMaquinaId = function(obj){
+        id_locador = obj.id_locador==null?(obj.id_maquina==null?"":"/*"): "/" + obj.id_locador
+        id_maquina = obj.id_maquina==null?"": "/" + obj.id_maquina
+
+        if (obj.id_maquina + obj.id_locador == "" && !obj.admin){
+            id_locador = "/" + obj.id_usuarioAtual
+        }
+
+        parameters = {url: "/api/maquinas"+id_locador + id_maquina,method: "GET"}
         return $http(parameters).then(success,error)
     }
 
     
-
-    
-    
-
     success = (response)=> response.data
     error = (response)=> {toastr.error(response.data);return $q.reject(response.data)}
 
@@ -151,17 +173,20 @@ INCLUDES = ['$scope','$filter','$http','$sce','api_service']
 TESTE = null
 
 app.controller('TodasCtrl', INCLUDES.concat(['tema_svc',function (sc, $filter,$http,$sce,api_service,tema_svc){
-    sc.idLista = FROMBACKEND.id
     sc.lista = []//FROMBACKEND.lista
     sc.Selected = {ativa:false}
     sc.temas = []
     sc.locadores = []
+    sc.loading = true
     sc.loadingSalvar = false
     sc.loadingTema = false
     sc.loadingToken = false
     
 
-    api_service.getMaquinaId(sc.idLista).then((r)=>sc.lista = r)
+    api_service.getMaquinaId(FROMBACKEND).then((r)=>{
+        sc.lista = r
+        sc.loading = false;
+    }).catch(()=>sc.loading = false)
 
     sc.gerarToken = ()=>{
         sc.loadingToken = true
@@ -258,13 +283,15 @@ app.controller('NovaCtrl', INCLUDES.concat(['tema_svc',function (sc, $filter,$ht
     sc.temas = []
     sc.novaMaquina = {nome:"",id_tema:null,id_sys_user:null,preco:null,descricao:"",ativa:false,free:false}
     sc.locadores = []
-    sc.loading = false
+    sc.loading = true
+    sc.loadingButton = true
     sc.loadingTema = false
 
     api_service.getTemas().then((r)=>sc.temas = r)
     api_service.getLocadores().then((r)=>{
-        sc.locadores = r
-    })
+        sc.locadores = r;
+        sc.loading = false
+    }).catch(()=>sc.loading = false)
 
 
     sc.cadastraMaquina = (novaMaquina)=>{
@@ -292,12 +319,12 @@ app.controller('NovaCtrl', INCLUDES.concat(['tema_svc',function (sc, $filter,$ht
         console.log(typeof obj.preco)
         obj.preco = parseFloat(obj.preco);
 
-        sc.loading = true
+        sc.loadingButton = true
         api_service.postMaquina(obj).then((r)=>{
-            sc.loading = false
+            sc.loadingButton = false
             toastr.success('Maquina Cadastrado com sucesso!');
             sc.novaMaquina = {nome:"",id_tema:null,preco:null,descricao:null,ativa:false,free:false}
-        }).catch(()=>sc.loading = false)
+        }).catch(()=>sc.loadingButton = false)
     }
 
     sc.cadastraTema = (novoTema)=>{
@@ -364,6 +391,7 @@ app.controller('LocadoresCtrl', INCLUDES.concat(['locador_svc',function (sc, $fi
     sc.Selected = {}
     sc.temas = []
     sc.locadores = []
+    sc.loading = true
 
     sc.select = (item)=>{
         sc.Selected = item
@@ -400,19 +428,30 @@ app.controller('LocadoresCtrl', INCLUDES.concat(['locador_svc',function (sc, $fi
 
     sc.openModal = ()=>$('#modal-novoTema').modal('show')
 
-    api_service.getLocadores2().then((r)=>sc.locadores = r)
     api_service.getDocs().then((r)=>sc.documentos = r)
+    api_service.getLocadores2(FROMBACKEND).then((r)=>{
+        sc.locadores = r;
+        sc.loading = false;
+    }).catch(()=>sc.loading = false)
 
 }]));
 
 app.controller('UsuariosCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce,api_service){
+    sc.id_locador = FROMBACKEND.id_locador
+    sc.id_user = FROMBACKEND.id_user
+    sc.loading = true
     sc.lista = []
     sc.Selected = {}
     sc.usuarios = []
     sc.documentos = []
 
-    api_service.getDocs().then((r)=>sc.documentos = r)
-    api_service.getUsuarios().then((r)=>sc.usuarios = r)
+    api_service.getDocs().then((r)=>{sc.documentos = r})
+    api_service.getUsuarios(FROMBACKEND).then((r)=>{
+        sc.usuarios = r;
+        sc.loading = false}
+        ).catch(()=>sc.loading = false)
+
+    //api_service.getMaquinaId(sc.idLista).then((r)=>sc.lista = r)
 
     sc.select = (item)=>{
         sc.Selected = item
@@ -497,10 +536,14 @@ app.controller('CarregarCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce
     sc.usuarios = []
     sc.valor = null
     sc.selected = null
-    sc.loading = false
+    sc.loading = true
+    sc.loadingButton = false
     sc.free = null
 
-    api_service.getUsuarios().then((r)=>sc.usuarios = r)
+    api_service.getUsuarios2().then((r)=>{
+        sc.usuarios = r
+        sc.loading = false
+    })
 
 
     sc.carregar = ()=>{
@@ -513,14 +556,14 @@ app.controller('CarregarCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce
         sc.free += 0 //transforma null em 0
         console.log(sc.free)
 
-        sc.loading = true //logo carregando e desabilita o botao
+        sc.loadingButton = true //logo carregando e desabilita o botao
         data={id_user:sc.selected.id,credito:sc.valor,free_play_days:sc.free}
         api_service.creditUsuarios(data).then((r)=>{
             toastr.success(r);
             sc.selected.credito += sc.valor
-            sc.loading = false //logo carregando e habilita o botao
+            sc.loadingButton = false //logo carregando e habilita o botao
             sc.selected = null
-        }).catch(()=>sc.loading = false)
+        }).catch(()=>sc.loadingButton = false)
     }
 
     sc.$watch('documento', function(newValue, oldValue) {
