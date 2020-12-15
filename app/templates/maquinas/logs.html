@@ -65,6 +65,20 @@
           
           <div class="card-body" ng-show="logs.length || true">
               <div class="row">
+
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label>Data</label>
+                    <div class="input-group" id="dt">
+                      <button type="button" class="btn btn-default float-right" style ="width: 100%;" id="daterange-btn">
+                        <i class="far fa-calendar-alt"></i> Selecione o Período
+                        <i class="fas fa-caret-down"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                  
+
                 {{fields.textField(3,"Data","01/01/2020","selectedData",id="date")}}
                 {{fields.selectField(3,"Locador","Selecione um locador","x.local for x in locadores","selectedLocador")}}
                 {{fields.textField(3,"Documento","documento do cliente","selectedDocumento")}}
@@ -135,4 +149,27 @@
 
 {% block js %}
 <script src="{{ randomJs(url_for('static', filename="angularJS/todosAngular.js")) }}" data-semver="1.4.3"></script>
+<script src="{{ url_for('static', filename="plugins/moment/moment.min.js") }}"></script>
+<script src="{{ url_for('static', filename="plugins/daterangepicker/daterangepicker.js") }}"></script>
+<script>
+  $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Hoje'            : [moment(), moment()],
+          'Ontem'           : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Últimos 7 dias'  : [moment().subtract(6, 'days'), moment()],
+          'Últimos 30 dias' : [moment().subtract(29, 'days'), moment()],
+          'Esse Mês'        : [moment().startOf('month'), moment().endOf('month')],
+          'Mês passado'     : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment(),
+        endDate  : moment()
+      },
+      function (start, end) {
+        console.log(start,end)
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+</script>
+
 {% endblock %}

@@ -1,9 +1,32 @@
 {% extends 'base.html'%}
 
+
+{% from './indicadores/indicadores.html' import smallBox %}
+
+{% block extra %}
+<li class="breadcrumb-item">
+<div class="form-group">
+  <div class="input-group" id="dt">
+    <button type="button" class="btn btn-default float-right" id="daterange-btn">
+      <i class="far fa-calendar-alt"></i> Selecione o Período
+      <i class="fas fa-caret-down"></i>
+    </button>
+  </div>
+</div>
+</li>
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
+      {{smallBox(44,"Usuários registrados","/asd","bg-warning","ion-person-add")}}
+      {{smallBox(10,"Total de creditos","/asd","bg-info","ion-play")}}
+      {{smallBox("R$10,00","Total Arrecadado","/","bg-success","ion-cash")}}
+      
+    </div>
+    <div class="row">
+
       <div class="col-lg-3 col-6">
         <!-- small box -->
         <div class="small-box bg-info">
@@ -18,6 +41,7 @@
           <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
+
       <!-- ./col -->
       <div class="col-lg-3 col-6">
         <!-- small box -->
@@ -612,5 +636,26 @@
 <!-- JQVMap -->
 <script src="{{ url_for('static', filename="plugins/jqvmap/jquery.vmap.min.js") }}"></script>
 <script src="{{ url_for('static', filename="plugins/jqvmap/maps/jquery.vmap.usa.js") }}"></script>
+<script src="{{ url_for('static', filename="plugins/daterangepicker/daterangepicker.js") }}"></script>
+
+<script>
+  $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Hoje'            : [moment(), moment()],
+          'Ontem'           : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Últimos 7 dias'  : [moment().subtract(6, 'days'), moment()],
+          'Últimos 30 dias' : [moment().subtract(29, 'days'), moment()],
+          'Esse Mês'        : [moment().startOf('month'), moment().endOf('month')],
+          'Mês passado'     : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+</script>
 {% endblock %}
 

@@ -1,0 +1,26 @@
+
+
+
+
+{# smallBox(value=10,subtitle = "melque",href = "/asd")
+colorClass = bg-info,bg-success,bg-warning
+icons =   ion-bag(sacola de compras),ion-stats-bars (icone de grafico),ion-person-add(usuario com simbolo de +)
+
+#}
+
+{% macro smallBox(value="", subtitle="",href="",colorClass="bg-info",iconClass="ion-bag") %}
+    <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box {{colorClass}}">
+        <div class="inner">
+            <h3>{{value}}</h3>
+            <p>{{subtitle}}</p>
+        </div>
+        <div class="icon">
+            <i class="ion {{iconClass}}"></i>
+        </div>
+        <a href="{{href}}" class="small-box-footer">Mais informações <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+    </div>
+{% endmacro %}
+

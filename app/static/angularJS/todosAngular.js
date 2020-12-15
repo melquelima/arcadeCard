@@ -365,8 +365,6 @@ app.controller('LogsCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce,api
         
         
     }
-
-
 }]));
 
 app.controller('NovoLocadorCtrl', INCLUDES.concat(['locador_svc',function (sc, $filter,$http,$sce,api_service,locador_svc){
@@ -563,6 +561,8 @@ app.controller('CarregarCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce
             sc.selected.credito += sc.valor
             sc.loadingButton = false //logo carregando e habilita o botao
             sc.selected = null
+            sc.valor = 0
+            sc.free = 0
         }).catch(()=>sc.loadingButton = false)
     }
 
@@ -577,8 +577,6 @@ app.controller('CarregarCtrl', INCLUDES.concat([function (sc, $filter,$http,$sce
    
 
 }]));
-
-
 
 app.filter('filterJson', function () {
 
@@ -600,7 +598,6 @@ app.directive("editarMaquina", function() {
         templateUrl: 'static/angularJs/diretivas/editarMaquina/editarMaquina.html'
     };
 });
-
 
 
 function removeItemArrray(arr, value) {
