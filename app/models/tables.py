@@ -7,7 +7,7 @@ class Temas(db.Model):
     __tablename__ = "temas"
 
     id      = Column(Integer(),primary_key=True)
-    tema    = Column(String(),unique=True)
+    tema    = Column(String(255),unique=True)
   
     def __init__(self,tema):
         self.tema = tema
@@ -21,7 +21,7 @@ class Maquinas(db.Model):
     id          = Column(Integer(),primary_key=True)
     id_tema     = Column(Integer(),ForeignKey('temas.id'),nullable=False)
     id_sys_user = Column(Integer(),ForeignKey('sys_usuarios.id'),nullable=False)
-    nome        = Column(String(),unique=True,nullable=False)
+    nome        = Column(String(255),unique=True,nullable=False)
     descricao   = Column(String())
     preco       = Column(Float(),nullable=False)
     ativa       = Column(Boolean(),nullable=False)
@@ -66,8 +66,8 @@ class Pessoa(db.Model):
     nome                = Column(String(),nullable=False)
     telefone            = Column(String(),nullable=False)
     email               = Column(String(),nullable=False)
-    id_doc_type         = Column(Integer,ForeignKey('documentos.id'))
-    numero_documento    = Column(String(),nullable=False,unique=True)
+    id_doc_type         = Column(Integer,ForeignKey('documentos.id'),nullable=False)
+    numero_documento    = Column(String(20),nullable=False,unique=True)
     documento           = db.relationship("Documentos",foreign_keys=id_doc_type)
 
     def __init__(self,nome,telefone,email,id_doc_type,numero_documento):
@@ -95,7 +95,7 @@ class CliUsers(db.Model):
     id                  = Column(Integer(),primary_key=True)
     id_sys_user         = Column(Integer(),ForeignKey('sys_usuarios.id'),nullable=False)
     id_pessoa           = Column(Integer(),ForeignKey('pessoas.id'),unique=True)
-    numero_cartao       = Column(String(),unique=True,nullable=False)
+    numero_cartao       = Column(String(255),unique=True,nullable=False)
     credito             = Column(Float(),nullable=False)
     freeplay_data_exp   = Column(DateTime())
     ativo               = Column(Boolean(),nullable=False)
@@ -163,10 +163,10 @@ class SysUser(db.Model):
     __tablename__ = "sys_usuarios"
 
     id                  = Column(Integer,primary_key=True)
-    id_pessoa           = Column(Integer,ForeignKey('pessoas.id'))
+    id_pessoa           = Column(Integer,ForeignKey('pessoas.id'),nullable=False)
     local               = Column(String,nullable = False)
     endereco            = Column(String,nullable = False)
-    username            = Column(String,nullable = False,unique=True)
+    username            = Column(String(255),nullable = False,unique=True)
     senha               = Column(String,nullable = False)
     is_admin            = Column(Boolean,nullable = False)
     ativo               = Column(Boolean,nullable = False)

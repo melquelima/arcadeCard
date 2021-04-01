@@ -5,9 +5,9 @@ SQLALCHEMY_TRACK_MODIFICATIONS = True
 CORS_HEADERS = 'Content-Type'
 SECRET_KEY = "asdjkgasd$#43"
 
-SERVER = "arcadecard2.database.windows.net" 
-DB = "principal" 
-USER = "loginmaster" 
+SERVER = "arcadeserver.database.windows.net" 
+DB = "arcadecard" 
+USER = "arcadeAdmin" 
 PWD = "qwerty333#" 
 
 
