@@ -16,7 +16,7 @@ driver = "SQL+Server"
 print("driver:{}".format(driver)) 
 
 SQLALCHEMY_DATABASE_URI     = f"mssql+pyodbc://{USER}:{PWD}@{SERVER}/{DB}?driver={driver}"
-SQLALCHEMY_DATABASE_URI = f"mssql+pyodbc://{USER}:{PWD}@{SERVER}/{DB}?driver={driverH}" 
+SQLALCHEMY_DATABASE_URI     = f"mssql+pyodbc://{USER}:{PWD}@{SERVER}/{DB}?driver={driverH}" 
 #SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_HEROKU
 
 #SQLALCHEMY_DATABASE_URI = "sqlite:///storage.db"
