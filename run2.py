@@ -1,5 +1,5 @@
 import os
-from app import app
+from app import app,SQLAlchemy,db
 
 app.config['SQLALCHEMY_DATABASE_URI'] = app.config['SQLALCHEMY_DATABASE_HEROKU']
 #db = SQLAlchemy(app)
