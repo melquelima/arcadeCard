@@ -1,0 +1,27 @@
+
+{% macro flash() %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <hr>
+            <div class="alert alert-{{messages[0][0]}} flashes" role="alert">
+                {% if messages[0][0] == 'success' %}
+                    <h4 class="alert-heading">Sucesso!</h4>
+                {% elif messages[0][0] == 'warning' %}
+                    <h4 class="alert-heading">Atenção!</h4>
+                {% else %}
+                    <h4 class="alert-heading">Ops!</h4>
+                {% endif %}
+
+                <ul class="flashes">
+                    {% for category, message in messages %}
+                        <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% if messages[0][0] in ['danger','warning']%}
+                    <hr>
+                    <p class="mb-0">Caso precise de ajuda contate o administrador do sistema!</p>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endwith %}
+{% endmacro %}
