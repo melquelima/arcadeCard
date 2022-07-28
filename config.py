@@ -5,20 +5,25 @@ SQLALCHEMY_TRACK_MODIFICATIONS = True
 CORS_HEADERS = 'Content-Type'
 SECRET_KEY = "asdjkgasd$#43"
 
-#SERVER = "arcadeserver.database.windows.net" 
-SERVER = "servarcadetag.database.windows.net"
-#DB = "arcadecard" 
-DB = "arcadetag" 
+SERVER = "arcadeserver.database.windows.net" 
+DB = "arcadecard" 
 USER = "arcadeAdmin" 
 PWD = "qwerty333#" 
+
+SERVER = "arcadeserv.database.windows.net" 
+DB = "arcadebd"  
+USER = "adminarcade" 
+PWD = "Qwerty333#" 
 
 drivers = [item for item in pyodbc.drivers()] 
 driverH = drivers[-1]
 driver = "SQL+Server"
+driver = "ODBC Driver 17 for SQL Server"
 print("driver:{}".format(driver)) 
+print(drivers)
 
 SQLALCHEMY_DATABASE_URI     = f"mssql+pyodbc://{USER}:{PWD}@{SERVER}/{DB}?driver={driver}"
-SQLALCHEMY_DATABASE_URI     = f"mssql+pyodbc://{USER}:{PWD}@{SERVER}/{DB}?driver={driverH}" 
+#SQLALCHEMY_DATABASE_URI     = f"mssql+pyodbc://{USER}:{PWD}@{SERVER}/{DB}?driver={driverH}" 
 #SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_HEROKU
 
 #SQLALCHEMY_DATABASE_URI = "sqlite:///storage.db"
