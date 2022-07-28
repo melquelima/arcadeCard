@@ -23,15 +23,15 @@ migrate = Migrate(app,db)
 manager = Manager(app)
 manager.add_command('db',MigrateCommand)
 
-from app.models.tables import Temas
-# from app.models.filters import *
+#from app.models.tables import Temas
+from app.models.filters import *
 
-# from app.controllers.routes import default,maquinas,locadores,usuarios,login
-# from app.controllers.API.temas import *
-# from app.controllers.API.maquinas import *
-# from app.controllers.API.documentos import *
-# from app.controllers.API.sys_user import *
-# from app.controllers.API.fliperamas import *
-# from app.controllers.API.cli_users import *
+from app.controllers.routes import default,maquinas,locadores,usuarios,login
+from app.controllers.API.temas import *
+from app.controllers.API.maquinas import *
+from app.controllers.API.documentos import *
+from app.controllers.API.sys_user import *
+from app.controllers.API.fliperamas import *
+from app.controllers.API.cli_users import *
 
 
