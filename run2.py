@@ -1,8 +1,10 @@
 import os
+os.environ["ENV"] = "CHARLE" #DEV ALEX
+os.environ["INDEV"] = "1" #0
+
+
 from app import app,SQLAlchemy,db
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = app.config['SQLALCHEMY_DATABASE_HEROKU']
-#db = SQLAlchemy(app)
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
