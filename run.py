@@ -1,7 +1,7 @@
 import os
 from app import manager,app
 
-os.environ["ENV"] = "ALEX" #DEV ALEX
+os.environ["ENV"] = "CHARLE" #DEV ALEX
 os.environ["INDEV"] = "1" #0
 
 if __name__ == "__main__":

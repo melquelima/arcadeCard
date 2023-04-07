@@ -1,6 +1,6 @@
 import os
 os.environ["ENV"] = "CHARLE" #DEV ALEX
-os.environ["INDEV"] = "1" #0
+os.environ["INDEV"] = "0" #0
 
 
 from app import app,SQLAlchemy,db

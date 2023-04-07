@@ -17,7 +17,6 @@ if INDEV == '1':
     #drivers = [item for item in pyodbc.drivers()] 
     #driver = drivers[-1]
     driver = "ODBC Driver 17 for SQL Server"
-    ENV = "CHARLE"
 else:
     driver = "SQL+Server"
     driver = "ODBC Driver 17 for SQL Server"
