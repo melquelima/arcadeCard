@@ -10,6 +10,17 @@ SECRET_KEY = "asdjkgasd$#43"
 ENV = os.environ.get('ENV', 'NULL')
 INDEV = os.environ.get('DEV', '0')
 
+
+
+
+if INDEV == '1':
+    drivers = [item for item in pyodbc.drivers()] 
+    driver = drivers[-1]
+    ENV = "CHARLE"
+else:
+    driver = "SQL+Server"
+    driver = "ODBC Driver 17 for SQL Server"
+
 print(ENV,INDEV)
 
 if ENV == 'ALEX':
@@ -24,12 +35,6 @@ elif ENV == 'CHARLE':
     PWD = "Qwerty333#" 
 
 
-if INDEV == '1':
-    drivers = [item for item in pyodbc.drivers()] 
-    driver = drivers[-1]
-else:
-    driver = "SQL+Server"
-    driver = "ODBC Driver 17 for SQL Server"
 
 
 
