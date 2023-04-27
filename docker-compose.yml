@@ -9,7 +9,7 @@ services:
     ports:
       - "5000:5000"
     external_links:
-      - postgres
+      - postgres_cntr
     environment:
       - "ENV=CONTAINER"
     networks:
