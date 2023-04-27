@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  app:
+    build: .
+    container_name: arcade
+    command: python -u ./run.py
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    external_links:
+      - postgres
+    environment:
+      - "ENV=CONTAINER"
+    networks:
+      network1:
+
+networks:
+  network1:
+      external:
+        name: network1
