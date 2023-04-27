@@ -43,7 +43,7 @@ elif ENV == 'CONTAINER_FROM_OUT':
     PWD = "qwerty333"
     SQLALCHEMY_DATABASE_URI     = f"postgresql+psycopg2://{USER}:{PWD}@{SERVER}/{DB}"
 elif ENV == 'CONTAINER':
-    SERVER = "postgres"
+    SERVER = "postgres_cntr"
     PORT = 5430
     DB = "postgres"  
     USER = "postgres" 
