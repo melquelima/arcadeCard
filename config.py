@@ -38,14 +38,14 @@ elif ENV == 'CHARLE':
 elif ENV == 'CONTAINER_FROM_OUT':
     SERVER = "arcadecard.ddns.net"
     PORT = 5430
-    DB = "postgres"  
+    DB = "arcadecard"  
     USER = "postgres" 
     PWD = "qwerty333"
-    SQLALCHEMY_DATABASE_URI     = f"postgresql+psycopg2://{USER}:{PWD}@{SERVER}/{DB}"
+    SQLALCHEMY_DATABASE_URI     = f"postgresql+psycopg2://{USER}:{PWD}@{SERVER}:{PORT}/{DB}"
 elif ENV == 'CONTAINER':
     SERVER = "postgres_cntr"
     PORT = 5430
-    DB = "postgres"  
+    DB = "arcadecard"  
     USER = "postgres" 
     PWD = "qwerty333"
     SQLALCHEMY_DATABASE_URI     = f"postgresql+psycopg2://{USER}:{PWD}@{SERVER}/{DB}"
@@ -53,6 +53,7 @@ elif ENV == 'CONTAINER':
 
 
 print("driver:{}".format(driver)) 
+print(SQLALCHEMY_DATABASE_URI)
 
 #SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_HEROKU
 
