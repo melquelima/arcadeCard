@@ -36,8 +36,8 @@ elif ENV == 'CHARLE':
     PWD = "Qwerty333#"
     SQLALCHEMY_DATABASE_URI     = f"mssql+pyodbc://{USER}:{PWD}@{SERVER}/{DB}?driver={driver}"
 elif ENV == 'CONTAINER_FROM_OUT':
-    SERVER = "arcadecard.ddns.net"
-    PORT = 5430
+    SERVER = "154.56.60.61"
+    PORT = 5432
     DB = "arcadecard"  
     USER = "postgres" 
     PWD = "qwerty333"
