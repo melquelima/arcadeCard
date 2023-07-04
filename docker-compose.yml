@@ -7,7 +7,8 @@ services:
     command: python -u ./run.py
     restart: unless-stopped
     ports:
-      - "5000:5000"
+      #- "5000:5000"
+      - "80:5000"
     external_links:
       - postgres_cntr
     environment:
