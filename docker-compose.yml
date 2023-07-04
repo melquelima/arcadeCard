@@ -8,11 +8,12 @@ services:
     restart: unless-stopped
     ports:
       #- "5000:5000"
-      - "80:5000"
+      - "80:80"
     external_links:
       - postgres_cntr
     environment:
       - "ENV=CONTAINER"
+      - "PORT=80"
     networks:
       network1:
 
