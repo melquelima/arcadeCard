@@ -21,12 +21,13 @@ class Maquinas(db.Model):
     id          = Column(Integer(),primary_key=True)
     id_tema     = Column(Integer(),ForeignKey('temas.id'),nullable=False)
     id_sys_user = Column(Integer(),ForeignKey('sys_usuarios.id'),nullable=False)
-    nome        = Column(String(255),unique=True,nullable=False)
+    nome        = Column(String(255),nullable=False)
     descricao   = Column(String())
     preco       = Column(Float(),nullable=False)
     ativa       = Column(Boolean(),nullable=False)
     free        = Column(Boolean(),nullable=False)
     token       = Column(String(),nullable=False)
+    deleted     = Column(Boolean(),nullable=False)
     Tema        = db.relationship("Temas",foreign_keys=id_tema)
     sysUser     = db.relationship("SysUser",foreign_keys=id_sys_user)
 
@@ -39,6 +40,7 @@ class Maquinas(db.Model):
         self.ativa          =  ativa
         self.free           =  free
         self.token          =  token
+        self.deleted        =  False
 
     def __repr__(self):
         return "<Maq %r>" % self.nome

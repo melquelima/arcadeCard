@@ -23,9 +23,9 @@ def login():
             else:
                 flash("Usuário Inativo, por favor contate um administrador!")
         else:
-            flash("Login e(ou) senha invalido(s)!")
+            flash("Login e(ou) senha invalido(s)!",'danger')
 
-        
+    flash("Login e(ou) senha invalido(s)!",'danger')
     return render_template("login.html",form=form,user=current_user)
 
 @app.route('/logout')

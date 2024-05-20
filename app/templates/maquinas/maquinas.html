@@ -3,43 +3,43 @@
 
 {% block css %}
 <style>
-  td{
+  td {
     text-align: center;
   }
 
-  .bg-success,.bg-danger{
+  .bg-success,
+  .bg-danger {
     height: 25px;
     vertical-align: middle;
     padding-top: 6px;
     width: auto;
   }
 
-  div>span{
+  div>span {
     /* font-size: large !important; */
     width: 50%;
     cursor: pointer;
   }
-  th{
+
+  th {
     text-align: center;
   }
 
-  span>i{
+  span>i {
     font-size: 1.5em;
   }
 
-  span:hover >i{
-   color:white;
+  span:hover>i {
+    color: white;
   }
 
   @media screen and (max-width: 768px) {
-    div>span{
-    /* font-size: large !important; */
-    width: 100%;
-  }
+    div>span {
+      /* font-size: large !important; */
+      width: 100%;
+    }
 
   }
-
-
 </style>
 {% endblock %}
 
@@ -53,7 +53,8 @@
 
           <div class="card-tools">
             <div class="input-group input-group-sm" style="width: 150px;">
-              <input type="text" name="table_search" class="form-control float-right" placeholder="Pesquisar" ng-model="search">
+              <input type="text" name="table_search" class="form-control float-right" placeholder="Pesquisar"
+                ng-model="search">
 
               <div class="input-group-append">
                 <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
@@ -65,9 +66,9 @@
         <div class="card-body table-responsive p-0">
 
           {{fields.loading(ng_show = "loading")}}
-          {{fields.empty(ng_show="!lista.length && !loading")}}  
+          {{fields.empty(ng_show="!lista.length && !loading")}}
 
-         
+
 
           <table class="table table-hover text-nowrap ng-cloak" ng-show="lista.length">
             <thead>
@@ -79,30 +80,47 @@
                 <th>Free</th>
                 <th>Status</th>
                 <th>Editar</th>
+                <th>Excluir</th>
               </tr>
             </thead>
             <tbody ng-cloak>
               <tr ng-repeat="x in lista | filter : search">
                 <td>[{x.sysUser.local}]</td>
                 <td>[{x.Tema.tema}]</td>
-                <td>[{x.nome}]</td>  
+                <td>[{x.nome}]</td>
                 <td>[{ x.preco | currency:"R$"}]</td>
-                <td><div><span class="badge" ng-Class="x.free?'bg-success':'bg-danger'">[{  x.free?"SIM":"NÃO" }]</span></div></td>
-                <td><div><span class="badge" ng-Class="x.ativa?'bg-success':'bg-danger'">[{  x.ativa?"ATIVA":"INATIVA" }]</span></div></td>
-                <td><div><span class="badge bg-warning" ng-click="{{ 'select(x)' if current_user.is_admin else 'editarStatus(x)' }}"><i class="fas fa-edit"></i></span></div></td>
+                <td>
+                  <div><span class="badge" ng-Class="x.free?'bg-success':'bg-danger'">[{ x.free?"SIM":"NÃO" }]</span>
+                  </div>
+                </td>
+                <td>
+                  <div><span class="badge" ng-Class="x.ativa?'bg-success':'bg-danger'">[{ x.ativa?"ATIVA":"INATIVA"
+                      }]</span></div>
+                </td>
+                <td>
+                  <div><span class="badge bg-warning"
+                      ng-click="{{ 'select(x)' if current_user.is_admin else 'editarStatus(x)' }}"><i
+                        class="fas fa-edit"></i></span></div>
+                </td>
+                <td>
+                  <div><span class="badge bg-danger"
+                      ng-click="{{ 'select(x)' if current_user.is_admin else 'deletar(x)' }}"><i
+                        class="fas fa-remove"></i></span></div>
+                </td>
               </tr>
             </tbody>
           </table>
-         </div>
+        </div>
         <!-- /.card-body -->
       </div>
       <!-- /.card -->
     </div>
   </div>
 
-<!-- ==================================MODALS=============================================== -->
+  <!-- ==================================MODALS=============================================== -->
 
-  <div class="modal fade bd-example-modal-lg" id="modal-editar" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal fade bd-example-modal-lg" id="modal-editar" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header bg-color2">
@@ -114,10 +132,11 @@
         <div class="modal-body">
           <div class="card-body">
             <div class="row">
-              {{fields.selectField(3,"Locador","Selecione um locador","x.local for x in locadores","Selected.id_sys_user")}}
+              {{fields.selectField(3,"Locador","Selecione um locador","x.local for x in
+              locadores","Selected.id_sys_user")}}
               {{fields.textField(3,"Nome","Insira o nome da máquina","Selected.nome") }}
               {{fields.selectField(3,"Tema","Selecione um tema","x.tema for x in temas","Selected.id_tema")}}
-              
+
               <div class="col-sm-3">
                 <!-- select -->
                 <div class="form-group">
@@ -142,7 +161,7 @@
                   </div>
                 </div>
               </div>
-              
+
             </div>
             <div class="row" ng-show="token">
               {{fields.textAreaField(12,"Token",2,"","token") }}
@@ -150,14 +169,15 @@
 
             {{fields.button("Salvar","AlterarMaquina()","margin-top:80px","loadingSalvar") }}
 
+          </div>
         </div>
-        </div>
-        
+
       </div>
     </div>
   </div>
 
-  <div class="modal fade bd-example-modal-lg" id="modal-novoTema" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal fade bd-example-modal-lg" id="modal-novoTema" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header bg-color2">
@@ -175,12 +195,13 @@
           {{ fields.button("CADASTRAR TEMA","cadastraTema(NovoTemaValue)","","loadingTema") }}
 
         </div>
-        
+
       </div>
     </div>
   </div>
 
-  <div class="modal fade bd-example-modal-lg" id="modal-status" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal fade bd-example-modal-lg" id="modal-status" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header bg-color2">
@@ -193,11 +214,11 @@
           <div class="form-group">
             {{fields.checkField(3,"Ativo","ATIVA","INATIVA","Selected.ativa",id="toggle-demo2")}}
           </div>
-          
+
           {{ fields.button("Salvar Status","salvarStatus()","","loadingSalvar") }}
 
         </div>
-        
+
       </div>
     </div>
   </div>

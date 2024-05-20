@@ -24,14 +24,16 @@ def Maquinas_fnc(id_locador=None,id_maquina=None):
 
     if temFiltroLocador:
         if not temFiltroMaquina:
-            maquinas = Maquinas.query.filter(Maquinas.sysUser.has(id=id_locador)).all()
+            maquinas = Maquinas.query.filter(Maquinas.sysUser.has(id=id_locador))
         else:
-            maquinas = Maquinas.query.filter(and_(Maquinas.sysUser.has(id=id_locador),Maquinas.id == id_maquina)).all()
+            maquinas = Maquinas.query.filter(and_(Maquinas.sysUser.has(id=id_locador),Maquinas.id == id_maquina))
     else:
         if not temFiltroMaquina:
-            maquinas = Maquinas.query.all()
+            maquinas = Maquinas.query
         else:
-            maquinas = filterMaq(id = id_maquina).all()
+            maquinas = filterMaq(id = id_maquina)
+
+    maquinas = maquinas.filter(deleted = False).all()
 
     if not current_user.is_admin:
         if any([x.id_sys_user != current_user.id for x in maquinas]) or id_locador != current_user.id:
